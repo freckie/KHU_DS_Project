@@ -76,6 +76,7 @@ namespace kmh
 		void _print_in_order(BTreeNode<_Ty>* _Root, std::ostream& _Out);
 		void _print_pre_order(BTreeNode<_Ty>* _Root, std::ostream& _Out);
 		void _print_post_order(BTreeNode<_Ty>* _Root, std::ostream& _Out);
+		BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node);
 	};
 
 	// 생성자
@@ -369,6 +370,12 @@ namespace kmh
 		// root가 nulltpr인 경우
 		else
 			return;
+	}
+
+	template<typename _Ty>
+	BTreeNode<_Ty>* BinaryTree<_Ty>::_get_next_node(BTreeNode<_Ty>* _Node)
+	{
+		return NULL;
 	}
 }
 
