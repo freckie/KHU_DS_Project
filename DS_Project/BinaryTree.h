@@ -26,7 +26,9 @@ namespace kmh
 	template <typename _Ty>
 	using BIterator = BinaryTreeIterator<_Ty>;
 
-	// Tree 구성하는 BTreeNode
+	/**
+	*	Binary Search Tree 구성하는 Node.
+	*/
 	template <typename _Ty>
 	struct BTreeNode
 	{
@@ -42,30 +44,117 @@ namespace kmh
 			: left(left), right(right), up(up), data(data) {}
 	};
 
-	// Binary Tree
+	/**
+	*	Binary Search Tree
+	*/
 	template <typename _Ty>
 	class BinaryTree
 	{
 
 	public:
+		/**
+		*	기본 생성자.
+		*/
 		BinaryTree();
+
+		/**
+		*	소멸자.
+		*/
 		~BinaryTree();
 
+		/**
+		*	@brief	Tree가 비었는지 확인한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	비었으면 true, 아니라면 false.
+		*/
 		bool is_empty() const;
+
+		/**
+		*	@brief	Tree에 추가할 수 있는지 확인한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	추가할 수 없다면 true, 아니라면 false.
+		*/
 		bool is_full() const;
+
+		/**
+		*	@brief	Tree를 모두 비운다.
+		*	@pre	없음.
+		*	@post	Tree가 비워진다.
+		*/
 		void make_empty();
+
+		/**
+		*	@brief	Tree에 데이터 수를 센다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	Tree의 사이즈.
+		*/
 		int length() const;
+
+		/**
+		*	@brief	Tree에 데이터를 추가한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	추가할 데이터.
+		*	@return	성공 여부.
+		*/
 		bool add(_Ty _Item);
+
+		/**
+		*	@brief	Tree에서 데이터를 삭제한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	삭제할 데이터.
+		*	@return	성공 여부.
+		*/
 		bool remove(_Ty _Item);
+
+		/**
+		*	@brief	Tree에 데이터를 변경한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	변경할 데이터.
+		*	@return	성공 여부.
+		*/
 		bool retrieve(_Ty& _Item);
+
+		/**
+		*	@brief	Tree에 데이터를 모두 출력한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Out ostream
+		*/
 		void print(std::ostream& _Out);
 
+		/**
+		*	@brief	Tree의 제일 작은 값의 iterator를 반환한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	제일 작은 값의 iterator.
+		*/
 		BinaryTreeIterator<_Ty> begin();
+
+		/**
+		*	@brief	Tree의 제일 큰 값 다음의 iterator를 반환한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	nullptr 담긴 iterator.
+		*/
 		BinaryTreeIterator<_Ty> end();
+
+		/**
+		*	@brief	Tree에서 item검색하여 iterator로 반환.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	iterator 얻고 싶은 값
+		*	@return	일치하는 값을 가진 iterator.
+		*/
 		BinaryTreeIterator<_Ty> find(_Ty _Item);
 
 	private:
-		BTreeNode<_Ty>* _Root;
+		BTreeNode<_Ty>* _Root;	///< Root Node
 
 		int _count_nodes(BTreeNode<_Ty>* _Root);
 		void _insert_node(BTreeNode<_Ty>*& _Prev, BTreeNode<_Ty>*& _Root, _Ty _Item);
@@ -80,6 +169,7 @@ namespace kmh
 		BTreeNode<_Ty>* _get_max_node(BTreeNode<_Ty>* _Node);
 	};
 
+	// 비 멤버 함수
 	template <typename _Ty>
 	BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node);
 
