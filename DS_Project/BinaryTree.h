@@ -153,6 +153,14 @@ namespace kmh
 		*/
 		BinaryTreeIterator<_Ty> find(_Ty _Item);
 
+		/**
+		*	@brief	Tree의 _Root를 반환한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	_Root.
+		*/
+		BTreeNode<_Ty>* get_root();
+
 	private:
 		BTreeNode<_Ty>* _Root;	///< Root Node
 
@@ -169,9 +177,33 @@ namespace kmh
 		BTreeNode<_Ty>* _get_max_node(BTreeNode<_Ty>* _Node);
 	};
 
-	// 비 멤버 함수
+	/***************/
+	/* 비 멤버 함수 */
+	/***************/
 	template <typename _Ty>
 	BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node);
+
+	template <typename _Ty, class Func>
+	void in_order(BinaryTree<_Ty>& _Tree, Func _Func);
+
+	template <typename _Ty, class Func>
+	void _in_order(BTreeNode<_Ty>* _Node, Func _Func);
+
+	template <typename _Ty, class Func>
+	void pre_order(BinaryTree<_Ty>& _Tree, Func _Func);
+
+	template <typename _Ty, class Func>
+	void _pre_order(BTreeNode<_Ty>* _Node, Func _Func);
+
+	template <typename _Ty, class Func>
+	void post_order(BinaryTree<_Ty>& _Tree, Func _Func);
+
+	template <typename _Ty, class Func>
+	void _post_order(BTreeNode<_Ty>* _Node, Func _Func);
+
+	/************/
+	/* 멤버 함수 */
+	/************/
 
 	// 생성자
 	template <typename _Ty>
@@ -294,6 +326,12 @@ namespace kmh
 	{
 		BTreeNode<_Ty>* temp = _get_node(_Root, _Item);
 		return BinaryTreeIterator<_Ty>(temp);
+	}
+
+	template<typename _Ty>
+	BTreeNode<_Ty>* BinaryTree<_Ty>::get_root()
+	{
+		return _Root;
 	}
 
 	///////////////////////
@@ -513,6 +551,101 @@ namespace kmh
 		return ptr;
 	}
 
+	template<typename _Ty, class Func>
+	void in_order(BinaryTree<_Ty>& _Tree, Func _Func)
+	{
+		BTreeNode<_Ty>* root = _Tree.get_root();
+
+		// root가 존재하는 경우
+		if (root != nullptr)
+		{
+			_in_order<int, Func>(root->left, _Func);
+			_Func(root->data);
+			_in_order<int, Func>(root->right, _Func);
+		}
+		// root가 nullptr인 경우
+		else
+			return;
+	}
+
+	template<typename _Ty, class Func>
+	void _in_order(BTreeNode<_Ty>* _Node, Func _Func)
+	{
+		// root가 존재하는 경우
+		if (_Node != nullptr)
+		{
+			_in_order<int, Func>(_Node->left, _Func);
+			_Func(_Node->data);
+			_in_order<int, Func>(_Node->right, _Func);
+		}
+		// root가 nullptr인 경우
+		else
+			return;
+	}
+
+	template<typename _Ty, class Func>
+	void pre_order(BinaryTree<_Ty>& _Tree, Func _Func)
+	{
+		BTreeNode<_Ty>* root = _Tree.get_root();
+
+		// root가 존재하는 경우
+		if (root != nullptr)
+		{
+			_Func(root->data);
+			_pre_order<int, Func>(root->left, _Func);
+			_pre_order<int, Func>(root->right, _Func);
+		}
+		// root가 nullptr인 경우
+		else
+			return;
+	}
+
+	template<typename _Ty, class Func>
+	void _pre_order(BTreeNode<_Ty>* _Node, Func _Func)
+	{
+		// root가 존재하는 경우
+		if (_Node != nullptr)
+		{
+			_Func(_Node->data);
+			_pre_order<int, Func>(_Node->left, _Func);
+			_pre_order<int, Func>(_Node->right, _Func);
+		}
+		// root가 nullptr인 경우
+		else
+			return;
+	}
+
+	template<typename _Ty, class Func>
+	void post_order(BinaryTree<_Ty>& _Tree, Func _Func)
+	{
+		BTreeNode<_Ty>* root = _Tree.get_root();
+
+		// root가 존재하는 경우
+		if (root != nullptr)
+		{
+			_post_order<int, Func>(root->left, _Func);
+			_post_order<int, Func>(root->right, _Func);
+			_Func(root->data);
+		}
+		// root가 nullptr인 경우
+		else
+			return;
+	}
+
+	template<typename _Ty, class Func>
+	void _post_order(BTreeNode<_Ty>* _Node, Func _Func)
+	{
+		// root가 존재하는 경우
+		if (_Node != nullptr)
+		{
+			_post_order<int, Func>(_Node->left, _Func);
+			_post_order<int, Func>(_Node->right, _Func);
+			_Func(_Node->data);
+		}
+		// root가 nullptr인 경우
+		else
+			return;
+	}
 }
 
 #endif _BINARY_TREE_H
