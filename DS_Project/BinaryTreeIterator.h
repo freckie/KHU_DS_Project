@@ -21,7 +21,7 @@ namespace kmh
 
 
 	/**
-	*	Iterator for Binary Search Tree
+	*	Iterator for Binary Search Tree (단방향)
 	*/
 	template <typename _Ty>
 	class BinaryTreeIterator
@@ -45,19 +45,23 @@ namespace kmh
 		*/
 		~BinaryTreeIterator() = default;
 
+		/**
+		*	@brief	iterator가 값을 가지고 있는지 확인.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@return	nullptr이라면 true, 아니라면 false.
+		*/
 		bool is_null() const;
 
 		_Ty& operator*();
 		_Ty& operator->() const;
 		BinaryTreeIterator<_Ty> operator++();
 		BinaryTreeIterator<_Ty> operator++(int);
-		BinaryTreeIterator<_Ty> operator--();
-		BinaryTreeIterator<_Ty> operator--(int);
 		bool operator==(const BinaryTreeIterator<_Ty>& _Rhs);
 		bool operator!=(const BinaryTreeIterator<_Ty>& _Rhs);
 
 	private:
-		BTreeNode<_Ty>* _Val;
+		BTreeNode<_Ty>* _Val;	///< 담을 값.
 
 	};
 
@@ -101,51 +105,6 @@ namespace kmh
 	{
 		BinaryTreeIterator<_Ty> temp = *this;
 		++(*this);
-		return temp;
-	}
-
-	template<typename _Ty>
-	BinaryTreeIterator<_Ty> BinaryTreeIterator<_Ty>::operator--()
-	{
-		// 왼쪽 노드가 존재할 때, 왼쪽에서 가장 큰 노드
-		if (_Val->left != nullptr)
-		{
-			_Val = _Val->left;
-			while (_Val->right != nullptr)
-				_Val = _Val->right;
-		}
-		// 자식 노드가 없을 때
-		else if ((_Val->left == nullptr) && (_Val->right == nullptr))
-		{
-			// 부모의 오른쪽이었다면
-			if (_Val == (_Val->up)->right)
-				_Val = _Val->up;
-			// 부모의 왼쪽이었다면, 계속 올라감
-			else if (_Val == (_Val->up)->left)
-			{
-				while (true)
-				{
-					// 부모가 없다면 루프 끝
-					if (_Val->up == nullptr)
-						break;
-					// 부모의 오른쪽이었다면 루프 끝
-					else if (_Val == (_Val->up)->right)
-						break;
-					// 부모의 오른쪽이었다면 루프 계속 진행
-					else
-						_Val = _Val->up;
-				}
-				_Val = _Val->up;
-			}
-		}
-		return *this;
-	}
-
-	template<typename _Ty>
-	BinaryTreeIterator<_Ty> BinaryTreeIterator<_Ty>::operator--(int)
-	{
-		BinaryTreeIterator<_Ty> temp = *this;
-		--(*this);
 		return temp;
 	}
 
