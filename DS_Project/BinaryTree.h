@@ -76,8 +76,12 @@ namespace kmh
 		void _print_in_order(BTreeNode<_Ty>* _Root, std::ostream& _Out);
 		void _print_pre_order(BTreeNode<_Ty>* _Root, std::ostream& _Out);
 		void _print_post_order(BTreeNode<_Ty>* _Root, std::ostream& _Out);
-		BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node);
+		BTreeNode<_Ty>* _get_min_node(BTreeNode<_Ty>* _Node);
+		BTreeNode<_Ty>* _get_max_node(BTreeNode<_Ty>* _Node);
 	};
+
+	template <typename _Ty>
+	BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node);
 
 	// 积己磊
 	template <typename _Ty>
@@ -373,10 +377,52 @@ namespace kmh
 	}
 
 	template<typename _Ty>
-	BTreeNode<_Ty>* BinaryTree<_Ty>::_get_next_node(BTreeNode<_Ty>* _Node)
+	BTreeNode<_Ty>* BinaryTree<_Ty>::_get_min_node(BTreeNode<_Ty>* _Node)
 	{
-		return NULL;
+		BTreeNode<_Ty>* cur = _Node;
+
+		// 力老 哭率.
+		while (cur->left != nullptr)
+			cur = cur->left;
+
+		return cur;
 	}
+
+	template<typename _Ty>
+	BTreeNode<_Ty>* BinaryTree<_Ty>::_get_max_node(BTreeNode<_Ty>* _Node)
+	{
+		BTreeNode<_Ty>* cur = _Node;
+
+		// 力老 坷弗率.
+		while (cur->right != nullptr)
+			cur = cur->right;
+
+		return cur;
+	}
+
+	// 寇何 窃荐.
+	template<typename _Ty>
+	BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node)
+	{
+		if (_Node->right != nullptr)
+		{
+			BTreeNode<_Ty>* cur = _Node->right;
+			while (cur->left != nullptr)
+				cur = cur->left;
+
+			return cur;
+		}
+
+		BTreeNode<_Ty>* ptr = _Node->up;
+		while (ptr != nullptr && _Node == ptr->right)
+		{
+			_Node = ptr;
+			ptr = ptr->up;
+		}
+
+		return ptr;
+	}
+
 }
 
 #endif _BINARY_TREE_H

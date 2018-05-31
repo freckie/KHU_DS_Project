@@ -91,37 +91,8 @@ namespace kmh
 	template<typename _Ty>
 	BinaryTreeIterator<_Ty> BinaryTreeIterator<_Ty>::operator++()
 	{
-		// 오른쪽 노드가 존재할 때, 오른쪽에서 가장 작은 노드
-		if (_Val->right != nullptr)
-		{
-			_Val = _Val->right;
-			while (_Val->left != nullptr)
-				_Val = _Val->left;
-		}
-		// 자식 노드가 없을 때
-		else if ((_Val->left == nullptr) && (_Val->right == nullptr))
-		{
-			// 부모의 왼쪽이었다면
-			if (_Val == (_Val->up)->left)
-				_Val = _Val->up;
-			// 부모의 오른쪽이었다면, 계속 올라감
-			else if (_Val == (_Val->up)->right)
-			{
-				while (true)
-				{
-					// 부모가 없다면 루프 끝
-					if (_Val->up == nullptr)
-						break;
-					// 부모의 왼쪽이었다면 루프 끝
-					else if (_Val == (_Val->up)->left)
-						break;
-					// 부모의 오른쪽이었다면 루프 계속 진행
-					else
-						_Val = _Val->up;
-				}
-				_Val = _Val->up;
-			}
-		}
+		BTreeNode<_Ty>* temp = _get_next_node(this->_Val);
+		_Val = temp;
 		return *this;
 	}
 
