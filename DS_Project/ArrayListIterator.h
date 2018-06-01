@@ -15,15 +15,15 @@ namespace kmh
 	template <typename _Ty>
 	class ArrayListIterator;
 
-	template <typename _Ty, size_t _Sz>
+	template <typename _Ty>
 	class ArrayList;
 
 
 	/**
 	*	using.
 	*/
-	template <typename _Ty, size_t _Sz>
-	using Array = ArrayList<_Ty, _Sz>;
+	template <typename _Ty>
+	using Array = ArrayList<_Ty>;
 	template <typename _Ty>
 	using AIterator = ArrayListIterator<_Ty>;
 

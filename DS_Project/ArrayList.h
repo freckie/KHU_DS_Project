@@ -15,15 +15,15 @@ namespace kmh
 	template <typename _Ty>
 	class ArrayListIterator;
 
-	template <typename _Ty, size_t _Sz>
+	template <typename _Ty>
 	class ArrayList;
 
 
 	/**
 	*	using.
 	*/
-	template <typename _Ty, size_t _Sz>
-	using Array = ArrayList<_Ty, _Sz>;
+	template <typename _Ty>
+	using Array = ArrayList<_Ty>;
 	template <typename _Ty>
 	using AIterator = ArrayListIterator<_Ty>;
 
@@ -31,7 +31,7 @@ namespace kmh
 	/**
 	*	ArrayList
 	*/
-	template <typename _Ty, size_t _Sz>
+	template <typename _Ty>
 	class ArrayList
 	{
 
@@ -42,6 +42,16 @@ namespace kmh
 		*	기본 생성자.
 		*/
 		ArrayList();
+
+		/**
+		*	복사 생성자.
+		*/
+		ArrayList(ArrayList<_Ty>& _Rhs);
+
+		/**
+		*	사이즈를 정해준 생성자.
+		*/
+		ArrayList(int size);
 
 		/**
 		*	initializer_list 사용한 생성자.
@@ -78,6 +88,22 @@ namespace kmh
 		_Ty* data();
 
 		/**
+		*	@brief	현재 Array를 초기화하고, 새로운 사이즈로 재할당한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Sz	새롭게 할당할 사이즈.
+		*/
+		void realloc(size_t _Sz);
+
+		/**
+		*	@brief	현재 array를 초기화하고, 파라미터의 값을 복사한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Rhs	복사할 파라미터 Array.
+		*/
+		void remake(ArrayList<_Ty>& _Rhs);
+
+		/**
 		*	@brief	Array의 해당 index값을 가져온다.
 		*	@pre	array가 초기화되어야 한다.
 		*	@post	없음.
@@ -109,7 +135,7 @@ namespace kmh
 		*	@param	_Rhs	파라미터 Array.
 		*	@return	this.
 		*/
-		ArrayList<_Ty, _Sz>& operator=(ArrayList<_Ty, _Sz>& _Rhs);
+		ArrayList<_Ty>& operator=(ArrayList<_Ty>& _Rhs);
 
 		/**
 		*	@brief	Array 대입 연산자.
@@ -118,7 +144,7 @@ namespace kmh
 		*	@param	_Rhs	파라미터 initializer_list.
 		*	@return	this.
 		*/
-		ArrayList<_Ty, _Sz>& operator=(std::initializer_list<_Ty> _Init);
+		ArrayList<_Ty>& operator=(std::initializer_list<_Ty> _Init);
 
 	private:
 		_Ty * _Elems;
@@ -126,20 +152,36 @@ namespace kmh
 	};
 
 	// 기본 생성자
-	template<typename _Ty, size_t _Sz>
-	ArrayList<_Ty, _Sz>::ArrayList()
+	template<typename _Ty>
+	ArrayList<_Ty>::ArrayList()
 	{
-		// 사이즈가 잘못되었으면 컴파일 에러.
-		static_assert(!(_Sz <= 0), "Wrong ArrayList Size.");
-		_Elems = new _Ty[_Sz];
-		_Size = _Sz;
+		_Size = 5;
+		_Elems = new _Ty[_Size];
+	}
+
+	template<typename _Ty>
+	ArrayList<_Ty>::ArrayList(ArrayList<_Ty>& _Rhs)
+	{
+		_Size = _Rhs._Size;
+		_Elems = new _Ty[_Size];
+
+		for (int i = 0; i < _Size; i++)
+			_Elems[i] = _Rhs._Elems[i];
+	}
+
+	template<typename _Ty>
+	ArrayList<_Ty>::ArrayList(int size)
+	{
+		_Size = size;
+		_Elems = new _Ty[_Size];
 	}
 
 	// initializer_list 사용한 생성자
-	template<typename _Ty, size_t _Sz>
-	ArrayList<_Ty, _Sz>::ArrayList(std::initializer_list<_Ty> _Init)
+	template<typename _Ty>
+	ArrayList<_Ty>::ArrayList(std::initializer_list<_Ty> _Init)
 	{
-		_Elems = new _Ty[_Sz];
+		_Size = _Init.size();
+		_Elems = new _Ty[_Size];
 
 		int idx = 0;
 		for (auto it = _Init.begin(); it != _Init.end(); ++it)
@@ -147,35 +189,55 @@ namespace kmh
 			_Elems[idx] = *it;
 			idx++;
 		}
-		_Size = _Sz;
 	}
 
-	template<typename _Ty, size_t _Sz>
-	ArrayList<_Ty, _Sz>::~ArrayList()
+	template<typename _Ty>
+	ArrayList<_Ty>::~ArrayList()
 	{
 		delete[] _Elems;
 	}
 
-	template<typename _Ty, size_t _Sz>
-	bool ArrayList<_Ty, _Sz>::is_empty() const
+	template<typename _Ty>
+	bool ArrayList<_Ty>::is_empty() const
 	{
 		return (_Sz > 0);
 	}
 
-	template<typename _Ty, size_t _Sz>
-	size_t ArrayList<_Ty, _Sz>::size() const
+	template<typename _Ty>
+	size_t ArrayList<_Ty>::size() const
 	{
 		return _Size;
 	}
 
-	template<typename _Ty, size_t _Sz>
-	_Ty * ArrayList<_Ty, _Sz>::data()
+	template<typename _Ty>
+	_Ty * ArrayList<_Ty>::data()
 	{
 		return _Elems;
 	}
 
-	template<typename _Ty, size_t _Sz>
-	_Ty & ArrayList<_Ty, _Sz>::at(size_t _Pos)
+	template<typename _Ty>
+	void ArrayList<_Ty>::realloc(size_t _Sz)
+	{
+		// 기존 Array 삭제.
+		delete[] _Elems;
+
+		// 새로 할당.
+		_Size = _Sz;
+		_Elems = new _Ty[_Sz];
+	}
+
+	template<typename _Ty>
+	void ArrayList<_Ty>::remake(ArrayList<_Ty>& _Rhs)
+	{
+		realloc(_Rhs._Size);
+
+		// 복사
+		for (int i = 0; i < _Size; i++)
+			_Elems[i] = _Rhs._Elems[i];
+	}
+
+	template<typename _Ty>
+	_Ty & ArrayList<_Ty>::at(size_t _Pos)
 	{
 		// pos가 잘못되었다면 디버그 에러.
 		if (_Pos >= _Size)
@@ -184,20 +246,20 @@ namespace kmh
 		return _Elems[_Pos];
 	}
 
-	template<typename _Ty, size_t _Sz>
-	ArrayListIterator<_Ty> ArrayList<_Ty, _Sz>::begin()
+	template<typename _Ty>
+	ArrayListIterator<_Ty> ArrayList<_Ty>::begin()
 	{
 		return ArrayListIterator<_Ty>(&_Elems[0]);
 	}
 
-	template<typename _Ty, size_t _Sz>
-	ArrayListIterator<_Ty> ArrayList<_Ty, _Sz>::end()
+	template<typename _Ty>
+	ArrayListIterator<_Ty> ArrayList<_Ty>::end()
 	{
-		return ArrayListIterator<_Ty>(&_Elems[_Sz]);
+		return ArrayListIterator<_Ty>(&_Elems[_Size]);
 	}
 
-	template<typename _Ty, size_t _Sz>
-	ArrayList<_Ty, _Sz>& ArrayList<_Ty, _Sz>::operator=(ArrayList<_Ty, _Sz>& _Rhs)
+	template<typename _Ty>
+	ArrayList<_Ty>& ArrayList<_Ty>::operator=(ArrayList<_Ty>& _Rhs)
 	{
 		// 사이즈가 잘못되었다면 컴파일 에러.
 		if (_Size != _Rhs._Size)
@@ -209,8 +271,8 @@ namespace kmh
 		return this;
 	}
 
-	template<typename _Ty, size_t _Sz>
-	ArrayList<_Ty, _Sz>& ArrayList<_Ty, _Sz>::operator=(std::initializer_list<_Ty> _Init)
+	template<typename _Ty>
+	ArrayList<_Ty>& ArrayList<_Ty>::operator=(std::initializer_list<_Ty> _Init)
 	{
 		// 사이즈가 잘못되었다면 컴파일 에러.
 		if (_Size != _Rhs.size())
