@@ -136,6 +136,13 @@ public:
 	void display_page();
 
 	/**
+	*	@brief	논문 데이터를 모두 출력한다.
+	*	@pre	없음.
+	*	@post	논문 데이터를 모두 출력된다.
+	*/
+	void display_record();
+
+	/**
 	*	@brief	item id를 통해 두 아이템을 비교한다.
 	*	@pre	두 아이템 타입이 초기화되어야 한다.
 	*	@param	lhs	비교를 위한 아이템 1.

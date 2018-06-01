@@ -41,44 +41,72 @@ void PaperType::set_page(string page)
 
 void PaperType::set_title_kb()
 {
+	cout << "\t논문 제목 : ";
+	cin >> m_Title;
 }
 
 void PaperType::set_author_kb()
 {
+	int temp;
+	cout << "\t저자 수 : ";
+	cin >> temp;
+
+	m_Author.realloc(temp);
 }
 
 void PaperType::set_page_kb()
 {
+	string temp;
+	cout << "\t논문 페이지 : ";
+	cin >> temp;
+
+	set_page(temp);
 }
 
 void PaperType::display_title()
 {
+	cout << "\t논문 이름 : " << m_Title << endl;
 }
 
 void PaperType::display_author()
 {
+	cout << "\t논문 저자 : ";
+	for (kmh::AIterator<AuthorType> iter = m_Author.begin(); iter != m_Author.end(); ++iter)
+		cout << (*iter).get_name() << " ";
+
+	cout << endl;
 }
 
 void PaperType::display_page()
 {
+	cout << "\t논문 페이지 : " << m_SPage
+		<< "p ~ " << m_EPage << "p (총 "
+		<< m_Page << "p)" << endl;
+}
+
+void PaperType::display_record()
+{
+	display_title();
+	display_page();
+	display_author();
 }
 
 bool operator>(const PaperType & lhs, const PaperType & rhs)
 {
-	return false;
+	return (lhs.m_Title > rhs.m_Title);
 }
 
 bool operator<(const PaperType & lhs, const PaperType & rhs)
 {
-	return false;
+	return (lhs.m_Title < rhs.m_Title);
 }
 
 bool operator==(const PaperType & lhs, const PaperType & rhs)
 {
-	return false;
+	return (lhs.m_Title == rhs.m_Title);
 }
 
 bool operator!=(const PaperType & lhs, const PaperType & rhs)
 {
-	return false;
+	return (lhs.m_Title != rhs.m_Title);
 }

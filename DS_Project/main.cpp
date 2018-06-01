@@ -28,7 +28,8 @@ int main(void)
 	bt.add("Fifth");
 
 	in_order(bt, [](auto val) { cout << val->data << " "; });
-	bt.make_empty();*/
+	bt.make_empty();
+	*/
 
 	return 0;
 }

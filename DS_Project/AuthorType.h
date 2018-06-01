@@ -99,6 +99,15 @@ public:
 	*/
 	friend bool operator ==(const AuthorType& lhs, const AuthorType& rhs);
 
+	/**
+	*	@brief	item id를 통해 두 아이템을 비교한다.
+	*	@pre	두 아이템 타입이 초기화되어야 한다.
+	*	@param	lhs	비교를 위한 아이템 1.
+	*			rhs	비교를 위한 아이템 2.
+	*	@return	둘이 같다면 true.
+	*/
+	friend bool operator !=(const AuthorType& lhs, const AuthorType& rhs);
+
 protected:
 	string m_Name;
 

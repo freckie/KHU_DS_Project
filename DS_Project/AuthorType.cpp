@@ -40,3 +40,8 @@ bool operator==(const AuthorType & lhs, const AuthorType & rhs)
 {
 	return (lhs.m_Name == rhs.m_Name);
 }
+
+bool operator!=(const AuthorType & lhs, const AuthorType & rhs)
+{
+	return (lhs.m_Name != rhs.m_Name);
+}
