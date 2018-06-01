@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AVLTree.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AVLTreeIterator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="LinkedList.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

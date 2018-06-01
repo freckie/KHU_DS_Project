@@ -148,8 +148,6 @@
     <ClInclude Include="ArrayList.h" />
     <ClInclude Include="ArrayListIterator.h" />
     <ClInclude Include="AuthorType.h" />
-    <ClInclude Include="AVLTree.h" />
-    <ClInclude Include="AVLTreeIterator.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="BinaryTreeIterator.h" />
     <ClInclude Include="ConferenceType.h" />
