@@ -9,12 +9,15 @@ using namespace std;
 
 int main(void)
 {
-	kmh::BinaryTree<int> bt;
-	bt.add(5);
-	bt.add(7);
-	bt.add(1);
-	bt.add(4);
-	bt.add(3);
+	kmh::BinaryTree<string> bt;
+	bt.add("First");
+	bt.add("Second");
+	bt.add("Third");
+	bt.add("Fourth");
+	bt.add("Fifth");
 
-	pre_order(bt, [](int val) { cout << val << " "; });
+	in_order(bt, [](auto val) { cout << val->data << " "; });
+	bt.make_empty();
+
+	return 0;
 }

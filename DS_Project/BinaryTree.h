@@ -247,9 +247,7 @@ namespace kmh
 	template <typename _Ty>
 	void BinaryTree<_Ty>::make_empty()
 	{
-		/*
-		* 모두 삭제 코드 추가하기
-		*/
+		_post_order(_Root, [](BTreeNode<_Ty>* node) {delete node; });
 		_Root = nullptr;
 	}
 
@@ -559,9 +557,9 @@ namespace kmh
 		// root가 존재하는 경우
 		if (root != nullptr)
 		{
-			_in_order<int, Func>(root->left, _Func);
-			_Func(root->data);
-			_in_order<int, Func>(root->right, _Func);
+			_in_order<_Ty, Func>(root->left, _Func);
+			_Func(root);
+			_in_order<_Ty, Func>(root->right, _Func);
 		}
 		// root가 nullptr인 경우
 		else
@@ -574,9 +572,9 @@ namespace kmh
 		// root가 존재하는 경우
 		if (_Node != nullptr)
 		{
-			_in_order<int, Func>(_Node->left, _Func);
-			_Func(_Node->data);
-			_in_order<int, Func>(_Node->right, _Func);
+			_in_order<_Ty, Func>(_Node->left, _Func);
+			_Func(_Node);
+			_in_order<_Ty, Func>(_Node->right, _Func);
 		}
 		// root가 nullptr인 경우
 		else
@@ -591,9 +589,9 @@ namespace kmh
 		// root가 존재하는 경우
 		if (root != nullptr)
 		{
-			_Func(root->data);
-			_pre_order<int, Func>(root->left, _Func);
-			_pre_order<int, Func>(root->right, _Func);
+			_Func(root);
+			_pre_order<_Ty, Func>(root->left, _Func);
+			_pre_order<_Ty, Func>(root->right, _Func);
 		}
 		// root가 nullptr인 경우
 		else
@@ -606,9 +604,9 @@ namespace kmh
 		// root가 존재하는 경우
 		if (_Node != nullptr)
 		{
-			_Func(_Node->data);
-			_pre_order<int, Func>(_Node->left, _Func);
-			_pre_order<int, Func>(_Node->right, _Func);
+			_Func(_Node);
+			_pre_order<_Ty, Func>(_Node->left, _Func);
+			_pre_order<_Ty, Func>(_Node->right, _Func);
 		}
 		// root가 nullptr인 경우
 		else
@@ -623,9 +621,9 @@ namespace kmh
 		// root가 존재하는 경우
 		if (root != nullptr)
 		{
-			_post_order<int, Func>(root->left, _Func);
-			_post_order<int, Func>(root->right, _Func);
-			_Func(root->data);
+			_post_order<_Ty, Func>(root->left, _Func);
+			_post_order<_Ty, Func>(root->right, _Func);
+			_Func(root);
 		}
 		// root가 nullptr인 경우
 		else
@@ -638,9 +636,9 @@ namespace kmh
 		// root가 존재하는 경우
 		if (_Node != nullptr)
 		{
-			_post_order<int, Func>(_Node->left, _Func);
-			_post_order<int, Func>(_Node->right, _Func);
-			_Func(_Node->data);
+			_post_order<_Ty, Func>(_Node->left, _Func);
+			_post_order<_Ty, Func>(_Node->right, _Func);
+			_Func(_Node);
 		}
 		// root가 nullptr인 경우
 		else
