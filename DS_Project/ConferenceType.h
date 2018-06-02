@@ -106,18 +106,94 @@ public:
 	*/
 	void add_paper(PaperType* paper);
 
+	/**
+	*	@brief	학술대회 제목을 화면에 출력한다.
+	*	@pre	학술대회 제목이 설정되어야 한다.
+	*	@post	학술대회 제목이 화면에 출력된다.
+	*/
 	void display_title();
+
+	/**
+	*	@brief	학술대회 개최 날짜를 화면에 출력한다.
+	*	@pre	학술대회 개최 날짜를 설정되어야 한다.
+	*	@post	학술대회 개최 날짜가 화면에 출력된다.
+	*/
 	void display_date();
+
+	/**
+	*	@brief	학술대회에 포함된 논문을 화면에 출력한다.
+	*	@pre	학술대회에 포함된 논문이 설정되어야 한다.
+	*	@post	학술대회에 포함된 논문이 화면에 출력된다.
+	*/
 	void display_papers();
+
+	/**
+	*	@brief	학술대회 모든 데이터를 화면에 출력한다.
+	*	@pre	학술대회 모든 데이터가 설정되어야 한다.
+	*	@post	학술대회 모든 데이터가 화면에 출력된다.
+	*/
 	void display_record();
 
+	/**
+	*	@brief	문자열과 일치하는 논문을 찾아 반환한다.
+	*	@pre	없음.
+	*	@post	없음.
+	*	@param	paper_title	검색할 논문 이름 string.
+	*	@return	해당 논문을 담은 iterator.
+	*/
 	kmh::LIterator<PaperType*> find_paper(string paper_title);
+
+	/**
+	*	@brief	문자열과 일치하는 논문을 찾아 반환한다.
+	*	@pre	없음.
+	*	@post	없음.
+	*	@param	paper	찾을 papertype.
+	*	@return	해당 논문을 담은 iterator.
+	*/
 	kmh::LIterator<PaperType*> find_paper(PaperType& paper);
+
+	/**
+	*	@brief	문자열이 제목에 포함된 논문을 찾아 반환한다.
+	*	@pre	없음.
+	*	@post	없음.
+	*	@param	keyword	찾을 키워드.
+	*/
 	void search_paper(string keyword);
 	
+	/**
+	*	@brief	item id를 통해 두 아이템을 비교한다.
+	*	@pre	두 아이템 타입이 초기화되어야 한다.
+	*	@param	lhs	비교를 위한 아이템 1.
+	*			rhs	비교를 위한 아이템 2.
+	*	@return	lhs가 크다면 true.
+	*/
 	friend bool operator > (const ConferenceType& lhs, const ConferenceType& rhs);
+
+	/**
+	*	@brief	item id를 통해 두 아이템을 비교한다.
+	*	@pre	두 아이템 타입이 초기화되어야 한다.
+	*	@param	lhs	비교를 위한 아이템 1.
+	*			rhs	비교를 위한 아이템 2.
+	*	@return	lhs가 크다면 true.
+	*/
 	friend bool operator < (const ConferenceType& lhs, const ConferenceType& rhs);
+
+	/**
+	*	@brief	item id를 통해 두 아이템을 비교한다.
+	*	@pre	두 아이템 타입이 초기화되어야 한다.
+	*	@param	lhs	비교를 위한 아이템 1.
+	*			rhs	비교를 위한 아이템 2.
+	*	@return	lhs가 크다면 true.
+	*/
 	friend bool operator == (const ConferenceType& lhs, const ConferenceType& rhs);
+
+	/**
+	*	@brief	item id를 통해 두 아이템을 비교한다.
+	*	@pre	두 아이템 타입이 초기화되어야 한다.
+	*	@param	lhs	비교를 위한 아이템 1.
+	*			rhs	비교를 위한 아이템 2.
+	*	@return	lhs가 크다면 true.
+	*/
 	friend bool operator != (const ConferenceType& lhs, const ConferenceType& rhs);
 
 private:
