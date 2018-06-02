@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AuthorType.cpp" />
+    <ClCompile Include="ConferenceType.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PaperType.cpp" />
   </ItemGroup>

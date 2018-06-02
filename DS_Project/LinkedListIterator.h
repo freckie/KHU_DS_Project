@@ -50,6 +50,11 @@ namespace kmh
 		LinkedListIterator(NodeType<_Ty>* _node) : val(_node) {}
 
 		/**
+		*	복사 생성자.
+		*/
+		LinkedListIterator(const LinkedListIterator<_Ty>& _Iter) : val(_Iter.val) {}
+
+		/**
 		*	소멸자.
 		*/
 		~LinkedListIterator() {}

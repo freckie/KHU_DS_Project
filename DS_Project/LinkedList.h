@@ -68,14 +68,14 @@ namespace kmh
 		*	@post	없음.
 		*	@return	리스트가 비어있으면 true, 아니라면 false.
 		*/
-		bool IsEmpty();
+		bool is_empty();
 
 		/**
 		*	@brief	리스트를 비운다.
 		*	@pre	없음.
 		*	@post	모든 데이터를 지운다.
 		*/
-		void MakeEmpty();
+		void make_empty();
 
 		/**
 		*	@brief	리스트의 길이를 반환한다.
@@ -83,7 +83,7 @@ namespace kmh
 		*	@post	없음.
 		*	@return	m_Length 리스트의 길이 반환.
 		*/
-		size_t GetLength() const;
+		size_t length() const;
 
 		/**
 		*	@brief	새로운 데이터를 리스트에 추가한다.
@@ -92,7 +92,7 @@ namespace kmh
 		*	@param	item	새로운 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int Add(_Ty item);
+		int add(_Ty item);
 
 		/**
 		*	@brief	데이터를 찾아 리스트에서 삭제한다.
@@ -101,7 +101,7 @@ namespace kmh
 		*	@param	item	삭제할 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int Delete(_Ty item);
+		int remove(_Ty item);
 
 		/**
 		*	@brief	입력받은 아이템으로 정보를 바꾼다.
@@ -110,7 +110,7 @@ namespace kmh
 		*	@param	item	새로 교체할 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int Replace(_Ty item);
+		int replace(_Ty item);
 
 		/**
 		*	@brief	리스트에 아이템을 가져온다.
@@ -119,7 +119,7 @@ namespace kmh
 		*	@param	item	가져올 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int Get(_Ty& item);
+		int get(_Ty& item);
 
 		/**
 		*	@brief	리스트의 아이템을 검색하여 Iterator로 가져온다.
@@ -165,24 +165,24 @@ namespace kmh
 	template <typename _Ty>
 	LinkedList<_Ty>::~LinkedList()
 	{
-		MakeEmpty();
+		make_empty();
 	}
 
 	// 리스트가 비었는지 확인.
 	template <typename _Ty>
-	bool LinkedList<_Ty>::IsEmpty()
+	bool LinkedList<_Ty>::is_empty()
 	{
 		return (m_Length == 0);
 	}
 
 	// 리스트를 비운다.
 	template <typename _Ty>
-	void LinkedList<_Ty>::MakeEmpty()
+	void LinkedList<_Ty>::make_empty()
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비어있다면 함수를 끝낸다.
-		if (IsEmpty())
+		if (is_empty())
 			return;
 		else
 		{
@@ -200,20 +200,20 @@ namespace kmh
 
 	// 리스트의 길이를 반환한다.
 	template <typename _Ty>
-	size_t LinkedList<_Ty>::GetLength() const
+	size_t LinkedList<_Ty>::length() const
 	{
 		return m_Length;
 	}
 
 	// 리스트에 데이터를 추가한다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::Add(_Ty item)
+	int LinkedList<_Ty>::add(_Ty item)
 	{
 		NodeType<_Ty>* target = new NodeType<_Ty>(item);
 		NodeType<_Ty>* cur;
 
 		// 리스트가 비어있다면 처음 삽입.
-		if (IsEmpty())
+		if (is_empty())
 		{
 			m_First = target;
 			m_Last = target;
@@ -264,12 +264,12 @@ namespace kmh
 
 	// 데이터를 삭제한다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::Delete(_Ty item)
+	int LinkedList<_Ty>::remove(_Ty item)
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
-		if (IsEmpty())
+		if (is_empty())
 			return 0;
 		// 리스트가 1개만 있다면
 		else if (m_Length == 1)
@@ -317,12 +317,12 @@ namespace kmh
 
 	// 리스트의 데이터를 변경한다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::Replace(_Ty item)
+	int LinkedList<_Ty>::replace(_Ty item)
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
-		if (IsEmpty())
+		if (is_empty())
 			return 0;
 		else
 		{
@@ -343,12 +343,12 @@ namespace kmh
 
 	// 아이템과 일치하는 아이템을 리스트에서 가져온다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::Get(_Ty& item)
+	int LinkedList<_Ty>::get(_Ty& item)
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
-		if (IsEmpty())
+		if (is_empty())
 			return 0;
 		else
 		{
@@ -373,7 +373,7 @@ namespace kmh
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
-		if (IsEmpty())
+		if (is_empty())
 			return LIterator<_Ty>(nullptr);
 		else
 		{

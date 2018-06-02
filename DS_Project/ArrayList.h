@@ -165,7 +165,7 @@ namespace kmh
 		_Size = _Rhs._Size;
 		_Elems = new _Ty[_Size];
 
-		for (int i = 0; i < _Size; i++)
+		for (size_t i = 0; i < _Size; i++)
 			_Elems[i] = _Rhs._Elems[i];
 	}
 

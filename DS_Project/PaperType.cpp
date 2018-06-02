@@ -6,20 +6,30 @@ PaperType::PaperType()
 	m_SPage = -1;
 	m_EPage = -1;
 	m_Page = -1;
+	m_Author = nullptr;
+}
+
+PaperType::~PaperType()
+{
+	delete m_Author;
+}
+
+void PaperType::set_title(string title)
+{
+	m_Title = title;
 }
 
 void PaperType::set_author(kmh::ArrayList<AuthorType>& author)
 {
-	m_Author.remake(author);
+	m_Author = new kmh::ArrayList<AuthorType>(author);
 }
 
 void PaperType::set_author(initializer_list<string> init)
 {
-	// 사이즈 재할당
-	m_Author.realloc(init.size());
-
+	m_Author = new kmh::ArrayList<AuthorType>(init.size());
+	
 	// 객체 생성 후 복사
-	AuthorType* ptr = m_Author.data();
+	AuthorType* ptr = m_Author->data();
 	int idx = 0;
 	for(auto iter = init.begin(); iter!=init.end(); ++iter)
 	{
@@ -51,7 +61,7 @@ void PaperType::set_author_kb()
 	cout << "\t저자 수 : ";
 	cin >> temp;
 
-	m_Author.realloc(temp);
+	m_Author->realloc(temp);
 }
 
 void PaperType::set_page_kb()
@@ -65,13 +75,13 @@ void PaperType::set_page_kb()
 
 void PaperType::display_title()
 {
-	cout << "\t논문 이름 : " << m_Title << endl;
+	cout << "\t- 논문 이름 : " << m_Title << endl;
 }
 
 void PaperType::display_author()
 {
-	cout << "\t논문 저자 : ";
-	for (kmh::AIterator<AuthorType> iter = m_Author.begin(); iter != m_Author.end(); ++iter)
+	cout << "\t- 논문 저자 : ";
+	for (kmh::AIterator<AuthorType> iter = m_Author->begin(); iter != m_Author->end(); ++iter)
 		cout << (*iter).get_name() << " ";
 
 	cout << endl;
@@ -79,13 +89,14 @@ void PaperType::display_author()
 
 void PaperType::display_page()
 {
-	cout << "\t논문 페이지 : " << m_SPage
+	cout << "\t- 논문 페이지 : " << m_SPage
 		<< "p ~ " << m_EPage << "p (총 "
 		<< m_Page << "p)" << endl;
 }
 
 void PaperType::display_record()
 {
+	cout << "\t< 논문 정보 >" << endl << endl;
 	display_title();
 	display_page();
 	display_author();

@@ -27,7 +27,7 @@ public:
 	/**
 	*	소멸자.
 	*/
-	~PaperType() {}
+	~PaperType();
 
 	/**
 	*	@brief	논문 제목을 가져온다.
@@ -43,7 +43,7 @@ public:
 	*	@post	없음.
 	*	@return	논문 저자 리스트.
 	*/
-	kmh::ArrayList<AuthorType>& get_author() { return m_Author; }
+	kmh::ArrayList<AuthorType>* get_author() { return m_Author; }
 
 	/**
 	*	@brief	논문 시작 페이지를 가져온다.
@@ -68,6 +68,14 @@ public:
 	*	@return	논문 페이지 수.
 	*/
 	int get_pages() { return m_Page; }
+
+	/**
+	*	@brief	논문 제목을 설정한다.
+	*	@pre	없음.
+	*	@post	논문 제목이 설정된다.
+	*	@param	title	논문 제목.
+	*/
+	void set_title(string title);
 
 	/**
 	*	@brief	저자를 설정한다.
@@ -181,7 +189,7 @@ public:
 
 protected:
 	string m_Title;		///< 논문 제목.
-	kmh::ArrayList<AuthorType> m_Author;	///< 논문 저자 리스트.
+	kmh::ArrayList<AuthorType>* m_Author;	///< 논문 저자 리스트.
 	int m_SPage;	///< 시작 페이지.
 	int m_EPage;	///< 끝 페이지.
 	int m_Page;		///< 페이지 수.
