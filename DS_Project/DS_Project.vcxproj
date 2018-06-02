@@ -157,6 +157,7 @@
     <ClInclude Include="test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Api.cpp" />
     <ClCompile Include="AuthorType.cpp" />
     <ClCompile Include="ConferenceType.cpp" />
     <ClCompile Include="main.cpp" />

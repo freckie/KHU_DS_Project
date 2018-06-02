@@ -41,7 +41,7 @@ namespace kmh
 	*	@param	line	console 창의 행 수 (int)
 	*	@param	title	console 창의 제목 (char*)
 	*/
-	void setWindowSize(int col, int line, const char* title);
+	void set_window_size(int col, int line, const char* title);
 
 	/**
 	*	@brief	콘솔 출력의 색깔을 변경한다.
@@ -49,7 +49,7 @@ namespace kmh
 	*	@post	콘솔 출력의 색깔이 변경된다.
 	*	@param	color	ColorType의 컬러.
 	*/
-	void setColor(ColorType color);
+	void set_color(ColorType color);
 
 	/**
 	*	@brief	cout 출력에서 콘솔의 색깔을 변경한다.
