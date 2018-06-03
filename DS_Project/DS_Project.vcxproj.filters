@@ -42,9 +42,6 @@
     <ClInclude Include="AuthorType.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="test.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="BinaryTree.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

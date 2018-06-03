@@ -382,9 +382,18 @@ void Application::display_conf_author()
 
 	system("cls");
 	cout << endl << endl;
-	cout << ColorType::LPurple << "\t< 논문 메뉴 :: 학술대회에 참가한 저자 모두 출력 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 참가한 저자 모두 출력 >" << ColorType::Default << endl << endl;
 	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
 		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
+
+	// 만약 논문이 없다면
+	if (m_NowConf->get_papers()->length() == 0)
+	{
+		cout << endl << ColorType::LRed
+			<< "\t[ERROR] 포함된 논문이 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
 
 	// 저자 리스트에 추가하기.
 	kmh::List<string> author_list;
@@ -523,10 +532,6 @@ void Application::replace_paper()
 	_getch();
 }
 
-void Application::display_paper()
-{
-}
-
 void Application::display_all_conference()
 {
 	system("cls");
@@ -555,6 +560,25 @@ void Application::display_all_conference()
 
 void Application::display_all_paper()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 모든 논문 출력 >" << ColorType::Default << endl << endl;
+
+	// 리스트가 비었을 경우.
+	if (m_Paper.is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	// 모두 출력
+	kmh::BIterator<PaperType> iter;
+	for (iter = m_Paper.begin(); iter != m_Paper.end(); ++iter)
+		(*iter).display_record();
+
+	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::display_all_author()
@@ -563,14 +587,105 @@ void Application::display_all_author()
 
 void Application::user_search_conference()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 학술대회 이름으로 검색 >" << ColorType::Default << endl << endl;
+
+	// 데이터 임시 저장.
+	ConferenceType temp;
+	temp.set_title_kb();
+
+	// 데이터 검색 후 출력.
+	kmh::LIterator<ConferenceType> result = m_Conf.find(temp);
+	if (result.is_null())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	(*result).display_record();
+
+	cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::user_search_conference_year()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 학술대회 연도로 검색 >" << ColorType::Default << endl << endl;
+
+	int year;
+	cout << "\t연도 : ";
+	cin >> year;
+	cout << endl;
+
+	bool found = false;
+
+	// 데이터 검색 후 출력.
+	kmh::LIterator<ConferenceType> iter;
+	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+	{
+		if ((*iter).get_ydate() == year)
+		{
+			(*iter).display_record();
+			found = true;
+		}
+	}
+
+	// 검색 결과가 없을 경우
+	if(!found)
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+	// 검색 결과가 있을 경우
+	else
+	{
+		cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
+		_getch();
+	}
 }
 
 void Application::user_search_paper()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 논문 키워드로 검색 >" << ColorType::Default << endl << endl;
+
+	string keyword;
+	cout << "\t검색어 : ";
+	cin >> keyword;
+	cout << endl;
+
+	// 검색
+	bool found = false;
+	cout << endl << "\t--- 검색 결과 ---" << endl;
+	kmh::BIterator<PaperType> iter;
+	for (iter = m_Paper.begin(); iter != m_Paper.end(); ++iter)
+	{
+		if ((*iter).get_title().find(keyword) != string::npos)
+		{
+			found = true;
+			(*iter).display_record();
+		}
+	}
+
+	// 검색 결과가 없을 경우
+	if (!found)
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+	// 검색 결과가 있을 경우
+	else
+	{
+		cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
+		_getch();
+	}
 }
 
 void Application::user_author_ranking()

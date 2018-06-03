@@ -154,7 +154,6 @@
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedListIterator.h" />
     <ClInclude Include="PaperType.h" />
-    <ClInclude Include="test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Api.cpp" />
