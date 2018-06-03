@@ -352,12 +352,12 @@ bool Application::select_conference()
 
 void Application::display_conf_paper()
 {
-	if (!select_conference())
-		return;
+	//if (!select_conference())
+		//return;
 
 	system("cls");
 	cout << endl << endl;
-	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 포함된 논문 모두 출력 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LPurple << "\t< 논문 메뉴 :: 포함된 논문 모두 출력 >" << ColorType::Default << endl << endl;
 	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
 		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
 
@@ -421,17 +421,17 @@ void Application::add_paper()
 		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
 
 	// 정보 입력받아 임시 저장하기
-	PaperType temp;
-	temp.set_title_kb();
-	temp.set_page_kb();
-	temp.set_author_kb();
+	PaperType* temp = new PaperType;
+	temp->set_title_kb();
+	temp->set_page_kb();
+	temp->set_author_kb();
 
 	cout << ColorType::LAqua 
 		<< "\n\t추가할 논문 데이터 설정이 완료되었습니다." << ColorType::Default << endl;
 
 	// 논문 추가하기. (Tree에 추가 후, 포인터를 ConferenceType에 추가.)
 	kmh::BTreeNode<PaperType>* temp_node;
-	temp_node = m_Paper.add_and_get(temp);
+	temp_node = m_Paper.add_and_get(*temp);
 
 	if (temp_node == nullptr)
 	{
@@ -460,7 +460,7 @@ void Application::delete_paper()
 	PaperType temp;
 	temp.set_title_kb();
 
-	// 논문 삭제하기. (리스트에서 삭제 후 tree에서도 삭제.)
+	// 논문 삭제하기.
 	kmh::BTreeNode<PaperType>* temp_node = m_Paper.get_node(temp);
 
 	if (temp_node == nullptr)

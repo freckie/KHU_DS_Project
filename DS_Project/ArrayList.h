@@ -163,10 +163,13 @@ namespace kmh
 	ArrayList<_Ty>::ArrayList(ArrayList<_Ty>& _Rhs)
 	{
 		_Size = _Rhs._Size;
+		_Elems = std::move(_Rhs._Elems);
+		/*
 		_Elems = new _Ty[_Size];
 
 		for (size_t i = 0; i < _Size; i++)
 			_Elems[i] = _Rhs._Elems[i];
+		*/
 	}
 
 	template<typename _Ty>

@@ -38,9 +38,9 @@ namespace kmh
 		BTreeNode* up;
 
 		BTreeNode() : left(nullptr), right(nullptr), up(nullptr) {}
-		BTreeNode(_Ty data) : left(nullptr), right(nullptr), up(nullptr), data(data) {}
-		BTreeNode(BTreeNode* up, _Ty data) : left(nullptr), right(nullptr), up(up), data(data) {}
-		BTreeNode(BTreeNode* left, BTreeNode* right, BTreeNode* up, _Ty data)
+		BTreeNode(_Ty& data) : left(nullptr), right(nullptr), up(nullptr), data(data) {}
+		BTreeNode(BTreeNode* up, _Ty& data) : left(nullptr), right(nullptr), up(up), data(data) {}
+		BTreeNode(BTreeNode* left, BTreeNode* right, BTreeNode* up, _Ty& data)
 			: left(left), right(right), up(up), data(data) {}
 	};
 
@@ -183,7 +183,7 @@ namespace kmh
 		BTreeNode<_Ty>* _Root;	///< Root Node
 
 		int _count_nodes(BTreeNode<_Ty>* _Root);
-		BTreeNode<_Ty>* _insert_node(BTreeNode<_Ty>*& _Prev, BTreeNode<_Ty>*& _Root, _Ty _Item);
+		BTreeNode<_Ty>* _insert_node(BTreeNode<_Ty>*& _Prev, BTreeNode<_Ty>*& _Root, _Ty& _Item);
 		void _remove_node(BTreeNode<_Ty>*& _Root, _Ty _Item);
 		void _retrieve_node(BTreeNode<_Ty>* _Root, _Ty& _Item);
 		BTreeNode<_Ty>* _get_node(BTreeNode<_Ty>* _Root, _Ty& _Item);
@@ -285,7 +285,7 @@ namespace kmh
 	}
 
 	template<typename _Ty>
-	BTreeNode<_Ty>* BinaryTree<_Ty>::add_and_get(_Ty & _Item)
+	BTreeNode<_Ty>* BinaryTree<_Ty>::add_and_get(_Ty& _Item)
 	{
 		return _insert_node(_Root, _Root, _Item);
 	}
@@ -378,7 +378,7 @@ namespace kmh
 
 	// node 추가
 	template <typename _Ty>
-	BTreeNode<_Ty>* BinaryTree<_Ty>::_insert_node(BTreeNode<_Ty>*& prev, BTreeNode<_Ty>*& _Root, _Ty _Item)
+	BTreeNode<_Ty>* BinaryTree<_Ty>::_insert_node(BTreeNode<_Ty>*& prev, BTreeNode<_Ty>*& _Root, _Ty& _Item)
 	{
 		// nullptr일 경우
 		if (_Root == nullptr)

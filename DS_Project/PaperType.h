@@ -28,6 +28,11 @@ public:
 	PaperType();
 
 	/**
+	*	복사 생성자.
+	*/
+	PaperType(PaperType& paper);
+
+	/**
 	*	소멸자.
 	*/
 	~PaperType();

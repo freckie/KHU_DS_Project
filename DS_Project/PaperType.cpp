@@ -9,6 +9,16 @@ PaperType::PaperType()
 	m_Author = new kmh::ArrayList<AuthorType>(1);
 }
 
+PaperType::PaperType(PaperType & paper)
+{
+	m_Title = paper.m_Title;
+	m_SPage = paper.m_SPage;
+	m_EPage = paper.m_EPage;
+	m_Page = paper.m_Page;
+	m_Author = paper.m_Author;
+	//m_Author = std::move(paper.m_Author);
+}
+
 PaperType::~PaperType()
 {
 	delete m_Author;
