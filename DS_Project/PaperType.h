@@ -7,6 +7,9 @@
 #include<iostream>
 #include<string>
 
+#include"LinkedListIterator.h"
+#include"ArrayListIterator.h"
+#include"LinkedList.h"
 #include"ArrayList.h"
 #include"AuthorType.h"
 

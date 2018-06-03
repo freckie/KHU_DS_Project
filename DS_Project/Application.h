@@ -150,11 +150,18 @@ public:
 	void display_all_author();
 
 	/**
-	*	@brief	학술대회를 검색한다.
+	*	@brief	학술대회를 이름으로 검색한다.
 	*	@pre	없음.
-	*	@post	검색된 학술대회가 출력된다.
+	*	@post	이름으로 검색된 학술대회가 출력된다.
 	*/
 	void user_search_conference();
+
+	/**
+	*	@brief	학술대회를 연도로 검색한다.
+	*	@pre	없음.
+	*	@post	연도로 검색된 학술대회가 출력된다.
+	*/
+	void user_search_conference_year();
 
 	/**
 	*	@brief	논문을 검색한다.

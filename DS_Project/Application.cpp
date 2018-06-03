@@ -125,9 +125,12 @@ void Application::run()
 				user_search_conference();
 				break;
 			case 5:
-				user_search_paper();
+				user_search_conference_year();
 				break;
 			case 6:
+				user_search_paper();
+				break;
+			case 7:
 				user_author_ranking();
 				break;
 			case 9:
@@ -179,7 +182,7 @@ int Application::get_command()
 		cout << endl << endl;
 		cout << ColorType::LPurple << "\t< 관리자 메뉴 - 논문 >" << ColorType::Default << endl << endl;
 		cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title() 
-			<< " (" << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
+			<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
 		cout << "\t1. 논문 추가" << endl;
 		cout << "\t2. 논문 삭제" << endl;
 		cout << "\t3. 논문 정보 수정" << endl;
@@ -193,10 +196,11 @@ int Application::get_command()
 		cout << ColorType::LPurple << "\t< 사용자 메뉴 >" << ColorType::Default << endl << endl;
 		cout << "\t1. 모든 학술대회 출력" << endl;
 		cout << "\t2. 모든 논문 출력" << endl;
-		cout << "\t3. 모든 논문 저자 출력" << endl;
-		cout << "\t4. 학술대회 검색" << endl;
-		cout << "\t5. 논문 키워드로 검색" << endl;
-		cout << "\t6. 저자 랭킹" << endl;
+		cout << "\t3. 모든 저자 출력" << endl;
+		cout << "\t4. 학술대회 이름으로 검색" << endl;
+		cout << "\t5. 학술대회 개최 연도로 검색" << endl;
+		cout << "\t6. 논문 키워드로 검색" << endl;
+		cout << "\t7. 저자 랭킹" << endl;
 		cout << "\t9. 뒤로가기" << endl;
 	}
 
@@ -348,6 +352,27 @@ bool Application::select_conference()
 
 void Application::display_conf_paper()
 {
+	if (!select_conference())
+		return;
+
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 포함된 논문 모두 출력 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
+		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
+
+	// 만약 비었을 경우
+	if(m_NowConf->get_papers()->is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	m_NowConf->display_papers();
+
+	cout << endl << ColorType::LGreen << "\t모든 정보를 출력하였습니다.\n";
+	_getch();
 }
 
 void Application::display_conf_author()
@@ -389,10 +414,68 @@ void Application::display_conf_author()
 
 void Application::add_paper()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 논문 메뉴 :: 논문 추가 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
+		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
+
+	// 정보 입력받아 임시 저장하기
+	PaperType temp;
+	temp.set_title_kb();
+	temp.set_page_kb();
+	temp.set_author_kb();
+
+	cout << ColorType::LAqua 
+		<< "\n\t추가할 논문 데이터 설정이 완료되었습니다." << ColorType::Default << endl;
+
+	// 논문 추가하기. (Tree에 추가 후, 포인터를 ConferenceType에 추가.)
+	kmh::BTreeNode<PaperType>* temp_node;
+	temp_node = m_Paper.add_and_get(temp);
+
+	if (temp_node == nullptr)
+	{
+		cout << endl << ColorType::LRed 
+			<< "\t[ERROR] 논문 추가에 실패하였습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	m_NowConf->add_paper(temp_node);
+
+	cout << ColorType::LAqua
+		<< "\n\t논문이 추가되었습니다!" << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::delete_paper()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 논문 메뉴 :: 논문 삭제 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
+		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
+
+	// 정보 입력받아 임시 저장하기
+	PaperType temp;
+	temp.set_title_kb();
+
+	// 논문 삭제하기. (리스트에서 삭제 후 tree에서도 삭제.)
+	kmh::BTreeNode<PaperType>* temp_node = m_Paper.get_node(temp);
+
+	if (temp_node == nullptr)
+	{
+		cout << endl << ColorType::LRed
+			<< "\t[ERROR] 논문 추가에 실패하였습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	m_NowConf->add_paper(temp_node);
+
+	cout << ColorType::LAqua
+		<< "\n\t논문이 추가되었습니다!" << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::replace_paper()
@@ -438,6 +521,10 @@ void Application::display_all_author()
 }
 
 void Application::user_search_conference()
+{
+}
+
+void Application::user_search_conference_year()
 {
 }
 

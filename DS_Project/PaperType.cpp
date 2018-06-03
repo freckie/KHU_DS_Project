@@ -6,7 +6,7 @@ PaperType::PaperType()
 	m_SPage = -1;
 	m_EPage = -1;
 	m_Page = -1;
-	m_Author = nullptr;
+	m_Author = new kmh::ArrayList<AuthorType>(1);
 }
 
 PaperType::~PaperType()
@@ -60,8 +60,18 @@ void PaperType::set_author_kb()
 	int temp;
 	cout << "\t저자 수 : ";
 	cin >> temp;
+	cout << endl;
 
 	m_Author->realloc(temp);
+
+	string temp_str;
+	AuthorType* temp_ptr = m_Author->data();
+	cout << "\t저자 이름(띄어쓰기로 구분) : ";
+	for (int i = 0; i < temp; i++)
+	{
+		cin >> temp_str;
+		temp_ptr[i].set_name(temp_str);
+	}
 }
 
 void PaperType::set_page_kb()

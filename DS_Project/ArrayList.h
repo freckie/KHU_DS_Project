@@ -219,11 +219,12 @@ namespace kmh
 	void ArrayList<_Ty>::realloc(size_t _Sz)
 	{
 		// 기존 Array 삭제.
-		delete[] _Elems;
+		if(_Elems != nullptr)
+			delete[] _Elems;
 
 		// 새로 할당.
 		_Size = _Sz;
-		_Elems = new _Ty[_Sz];
+		_Elems = new _Ty[_Size];
 	}
 
 	template<typename _Ty>

@@ -163,6 +163,15 @@ namespace kmh
 		BinaryTreeIterator<_Ty> find(_Ty _Item);
 
 		/**
+		*	@brief	Tree서 일치하는 아이템을 담고 있는 노드 포인터 반환.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	반환할 데이터.
+		*	@return	일치하는 아이템을 담고있는 노드 포인터 반환.
+		*/
+		BTreeNode<_Ty>* get_node(_Ty& _Item);
+
+		/**
 		*	@brief	Tree의 _Root를 반환한다.
 		*	@pre	없음.
 		*	@post	없음.
@@ -342,6 +351,12 @@ namespace kmh
 	}
 
 	template<typename _Ty>
+	BTreeNode<_Ty>* BinaryTree<_Ty>::get_node(_Ty & _Item)
+	{
+		return _get_node(_Root, _Item);
+	}
+
+	template<typename _Ty>
 	BTreeNode<_Ty>* BinaryTree<_Ty>::get_root()
 	{
 		return _Root;
@@ -367,7 +382,10 @@ namespace kmh
 	{
 		// nullptr일 경우
 		if (_Root == nullptr)
+		{
 			_Root = new BTreeNode<_Ty>(prev, _Item);
+			return _Root;
+		}
 		// root보다 item이 작을 때 왼쪽으로 탐색 후 삽입
 		else if (_Root->data > _Item)
 			_insert_node(_Root, _Root->left, _Item);
