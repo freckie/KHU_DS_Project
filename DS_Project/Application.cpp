@@ -382,7 +382,9 @@ void Application::display_conf_author()
 
 	system("cls");
 	cout << endl << endl;
-	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 저자 출력 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LPurple << "\t< 논문 메뉴 :: 학술대회에 참가한 저자 모두 출력 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
+		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
 
 	// 저자 리스트에 추가하기.
 	kmh::List<string> author_list;
@@ -403,10 +405,15 @@ void Application::display_conf_author()
 		}
 	}
 
+	cout << "\t학술대회에 참가한 저자는 다음과 같습니다.\n";
 	// 저자 리스트 출력
 	kmh::LIterator<string> iter4;
+	int idx = 1;
 	for (iter4 = author_list.begin(); iter4 != author_list.end(); ++iter4)
-		cout << *iter4 << endl;
+	{
+		cout << idx << ". " << *iter4 << endl;
+		idx++;
+	}
 
 	cout << ColorType::LAqua << "\n\t해당 학술대회의 모든 저자가 출력되었습니다." << ColorType::Default << endl;
 	_getch();
@@ -466,15 +473,18 @@ void Application::delete_paper()
 	if (temp_node == nullptr)
 	{
 		cout << endl << ColorType::LRed
-			<< "\t[ERROR] 논문 추가에 실패하였습니다." << ColorType::Default << endl;
+			<< "\t[ERROR] 논문 삭제에 실패하였습니다." << ColorType::Default << endl;
 		_getch();
 		return;
 	}
 
-	m_NowConf->add_paper(temp_node);
+	if(m_NowConf->get_papers()->remove(temp_node))
+		cout << ColorType::LAqua
+			<< "\n\t논문이 삭제되었습니다!" << ColorType::Default << endl;
+	else
+		cout << endl << ColorType::LRed
+			<< "\t[ERROR] 논문 삭제에 실패하였습니다." << ColorType::Default << endl;
 
-	cout << ColorType::LAqua
-		<< "\n\t논문이 추가되었습니다!" << ColorType::Default << endl;
 	_getch();
 }
 
