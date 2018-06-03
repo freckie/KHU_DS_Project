@@ -84,7 +84,7 @@ public:
 	*	@pre	없음.
 	*	@post	학술대회가 선택된다.
 	*/
-	void select_conference();
+	bool select_conference();
 
 	/**
 	*	@brief	학술대회에 포함된 논문을 모두 출력한다.

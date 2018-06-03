@@ -64,8 +64,8 @@ void Application::run()
 				display_conf_author();
 				break;
 			case 6:
-				select_conference();
-				m_Menu = MenuLevel::Paper;
+				if(select_conference())
+					m_Menu = MenuLevel::Paper;
 				break;
 			case 9:
 				m_Menu = MenuLevel::Main;
@@ -96,6 +96,7 @@ void Application::run()
 				display_conf_paper();
 				break;
 			case 9:
+				m_NowConf = nullptr;
 				m_Menu = MenuLevel::Conference;
 				break;
 			case 0:
@@ -176,13 +177,13 @@ int Application::get_command()
 	else if (m_Menu == MenuLevel::Paper)
 	{
 		cout << endl << endl;
-		cout << ColorType::LPurple << "\t< 관리자 메뉴 - 논문 >" << ColorType::Default << endl;
+		cout << ColorType::LPurple << "\t< 관리자 메뉴 - 논문 >" << ColorType::Default << endl << endl;
 		cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title() 
 			<< " (" << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
 		cout << "\t1. 논문 추가" << endl;
 		cout << "\t2. 논문 삭제" << endl;
 		cout << "\t3. 논문 정보 수정" << endl;
-		cout << "\t4. 논문 정보 모두 출력" << endl;
+		cout << "\t4. 포함된 논문 정보 모두 출력" << endl;
 		cout << "\t9. 뒤로가기" << endl;
 	}
 	// 메뉴 레벨이 User
@@ -240,6 +241,14 @@ void Application::delete_conference()
 	cout << endl << endl;
 	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 학술대회 삭제 >" << ColorType::Default << endl << endl;
 
+	// 리스트가 비었을 경우.
+	if (m_Conf.is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
 	// 먼저 모두 출력
 	kmh::LIterator<ConferenceType> iter;
 	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
@@ -257,7 +266,7 @@ void Application::delete_conference()
 	kmh::LIterator<ConferenceType> siter = m_Conf.find(temp);
 	if (siter.is_null())
 	{
-		cout << endl << ColorType::LRed << "\t[ERROR] 잘못된 학술대회 ID 입력!" << ColorType::Default << endl;
+		cout << endl << ColorType::LRed << "\t[ERROR] 잘못된 학술대회 제목 입력!" << ColorType::Default << endl;
 		_getch();
 		return;
 	}
@@ -293,11 +302,19 @@ void Application::replace_conference()
 	_getch();
 }
 
-void Application::select_conference()
+bool Application::select_conference()
 {
 	system("cls");
 	cout << endl << endl;
 	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 학술대회 선택 >" << ColorType::Default << endl << endl;
+
+	// 리스트가 비었을 경우.
+	if (m_Conf.is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return false;
+	}
 
 	// 먼저 모두 출력
 	kmh::LIterator<ConferenceType> iter;
@@ -309,7 +326,7 @@ void Application::select_conference()
 
 	// 정보 입력받아 임시 저장하기.
 	ConferenceType temp;
-	cout << endl << "\t삭제할 학술대회 제목을 지정하십시오. " << endl;
+	cout << endl << "\t선택할 학술대회 제목을 지정하십시오. " << endl;
 	temp.set_title_kb();
 
 	// conference 존재하는지 확인
@@ -317,13 +334,16 @@ void Application::select_conference()
 	if (siter.is_null())
 	{
 		cout << endl << ColorType::LRed << "\t[ERROR] 잘못된 학술대회 제목 입력!" << ColorType::Default << endl;
+		return false;
 	}
 	else
 	{
 		m_NowConf = &(*siter);
-		cout << ColorType::LAqua << "\n\t해당 학술대회가 선택되었습니다" << ColorType::Default << endl;
+		cout << ColorType::LAqua << "\n\t해당 학술대회가 선택되었습니다." << ColorType::Default << endl;
 	}
 	_getch();
+
+	return true;
 }
 
 void Application::display_conf_paper()
@@ -332,6 +352,39 @@ void Application::display_conf_paper()
 
 void Application::display_conf_author()
 {
+	if (!select_conference())
+		return;
+
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 저자 출력 >" << ColorType::Default << endl << endl;
+
+	// 저자 리스트에 추가하기.
+	kmh::List<string> author_list;
+
+	kmh::LIterator<ConferenceType> iter;
+	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+	{
+		kmh::LIterator<kmh::BTreeNode<PaperType>*> iter2;
+		kmh::List<kmh::BTreeNode<PaperType>*>* ptr = (*iter).get_papers();
+		for (iter2 = ptr->begin(); iter2 != ptr->end(); ++iter2)
+		{
+			kmh::AIterator<AuthorType> iter3;
+			kmh::ArrayList<AuthorType>* ptr2 = (*iter2)->data.get_author();
+			for (iter3 = ptr2->begin(); iter3 != ptr2->end(); ++iter3)
+			{
+				author_list.add((*iter3).get_name());
+			}
+		}
+	}
+
+	// 저자 리스트 출력
+	kmh::LIterator<string> iter4;
+	for (iter4 = author_list.begin(); iter4 != author_list.end(); ++iter4)
+		cout << *iter4 << endl;
+
+	cout << ColorType::LAqua << "\n\t해당 학술대회의 모든 저자가 출력되었습니다." << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::add_paper()
@@ -352,6 +405,28 @@ void Application::display_paper()
 
 void Application::display_all_conference()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 모든 학술대회 목록 >" << ColorType::Default << endl << endl;
+
+	// 리스트가 비었을 경우.
+	if (m_Conf.is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	// 모두 출력
+	kmh::LIterator<ConferenceType> iter;
+	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+	{
+		(*iter).display_record();
+		cout << endl;
+	}
+
+	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::display_all_paper()

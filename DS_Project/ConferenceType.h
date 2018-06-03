@@ -6,7 +6,9 @@
 #include<iostream>
 #include<string>
 
+#include"BinaryTreeIterator.h"
 #include"LinkedListIterator.h"
+#include"BinaryTree.h"
 #include"LinkedList.h"
 #include"PaperType.h"
 
@@ -80,7 +82,7 @@ public:
 	*	@post	없음.
 	*	@return	논문 리스트 포인터.
 	*/
-	kmh::List<PaperType*>* get_papers() { return m_Papers; }
+	kmh::List<kmh::BTreeNode<PaperType>*>* get_papers() { return m_Papers; }
 	
 	/**
 	*	@brief	학술대회 제목을 설정한다.
@@ -118,7 +120,7 @@ public:
 	*	@post	없음.
 	*	@param	paper	논문 포인터.
 	*/
-	void add_paper(PaperType* paper);
+	void add_paper(kmh::BTreeNode<PaperType>* paper);
 
 	/**
 	*	@brief	학술대회 제목을 화면에 출력한다.
@@ -155,7 +157,7 @@ public:
 	*	@param	paper_title	검색할 논문 이름 string.
 	*	@return	해당 논문을 담은 iterator.
 	*/
-	kmh::LIterator<PaperType*> find_paper(string paper_title);
+	kmh::LIterator<kmh::BTreeNode<PaperType>*> find_paper(string paper_title);
 
 	/**
 	*	@brief	문자열과 일치하는 논문을 찾아 반환한다.
@@ -164,7 +166,7 @@ public:
 	*	@param	paper	찾을 papertype.
 	*	@return	해당 논문을 담은 iterator.
 	*/
-	kmh::LIterator<PaperType*> find_paper(PaperType& paper);
+	kmh::LIterator<kmh::BTreeNode<PaperType>*> find_paper(PaperType& paper);
 
 	/**
 	*	@brief	문자열이 제목에 포함된 논문을 찾아 반환한다.
@@ -216,7 +218,7 @@ private:
 	int m_YDate;	///< 개최 날짜 (연도).
 	int m_MDate;	///< 개최 날짜 (월).
 	int m_DDate;	///< 개최 날짜 (일).
-	kmh::List<PaperType*>* m_Papers;	///< 논문 포인터 저장 리스트.
+	kmh::List<kmh::BTreeNode<PaperType>*>* m_Papers;	///< 논문 포인터 저장 리스트.
 
 };
 

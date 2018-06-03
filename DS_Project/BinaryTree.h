@@ -100,7 +100,16 @@ namespace kmh
 		*	@param	_Item	추가할 데이터.
 		*	@return	성공 여부.
 		*/
-		bool add(_Ty _Item);
+		bool add(_Ty& _Item);
+
+		/**
+		*	@brief	Tree에 데이터를 추가하고, 데이터의 포인터를 반환한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	추가할 데이터.
+		*	@return	추가한 데이터의 노드 포인터. 추가 실패라면 nullptr.
+		*/
+		BTreeNode<_Ty>* add_and_get(_Ty& _Item);
 
 		/**
 		*	@brief	Tree에서 데이터를 삭제한다.
@@ -109,7 +118,7 @@ namespace kmh
 		*	@param	_Item	삭제할 데이터.
 		*	@return	성공 여부.
 		*/
-		bool remove(_Ty _Item);
+		bool remove(_Ty& _Item);
 
 		/**
 		*	@brief	Tree에 데이터를 변경한다.
@@ -165,7 +174,7 @@ namespace kmh
 		BTreeNode<_Ty>* _Root;	///< Root Node
 
 		int _count_nodes(BTreeNode<_Ty>* _Root);
-		void _insert_node(BTreeNode<_Ty>*& _Prev, BTreeNode<_Ty>*& _Root, _Ty _Item);
+		BTreeNode<_Ty>* _insert_node(BTreeNode<_Ty>*& _Prev, BTreeNode<_Ty>*& _Root, _Ty _Item);
 		void _remove_node(BTreeNode<_Ty>*& _Root, _Ty _Item);
 		void _retrieve_node(BTreeNode<_Ty>* _Root, _Ty& _Item);
 		BTreeNode<_Ty>* _get_node(BTreeNode<_Ty>* _Root, _Ty& _Item);
@@ -260,15 +269,21 @@ namespace kmh
 
 	// Tree에 BTreeNode 추가
 	template <typename _Ty>
-	bool BinaryTree<_Ty>::add(_Ty _Item)
+	bool BinaryTree<_Ty>::add(_Ty& _Item)
 	{
 		_insert_node(_Root, _Root, _Item);
 		return true;
 	}
 
+	template<typename _Ty>
+	BTreeNode<_Ty>* BinaryTree<_Ty>::add_and_get(_Ty & _Item)
+	{
+		return _insert_node(_Root, _Root, _Item);
+	}
+
 	// Tree에서 BTreeNode 삭제
 	template <typename _Ty>
-	bool BinaryTree<_Ty>::remove(_Ty _Item)
+	bool BinaryTree<_Ty>::remove(_Ty& _Item)
 	{
 		_remove_node(_Root, _Item);
 		return true;
@@ -348,7 +363,7 @@ namespace kmh
 
 	// node 추가
 	template <typename _Ty>
-	void BinaryTree<_Ty>::_insert_node(BTreeNode<_Ty>*& prev, BTreeNode<_Ty>*& _Root, _Ty _Item)
+	BTreeNode<_Ty>* BinaryTree<_Ty>::_insert_node(BTreeNode<_Ty>*& prev, BTreeNode<_Ty>*& _Root, _Ty _Item)
 	{
 		// nullptr일 경우
 		if (_Root == nullptr)
