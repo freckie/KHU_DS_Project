@@ -92,7 +92,7 @@ namespace kmh
 		*	@param	item	새로운 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int add(_Ty item);
+		bool add(_Ty item);
 
 		/**
 		*	@brief	데이터를 찾아 리스트에서 삭제한다.
@@ -101,7 +101,7 @@ namespace kmh
 		*	@param	item	삭제할 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int remove(_Ty item);
+		bool remove(_Ty item);
 
 		/**
 		*	@brief	입력받은 아이템으로 정보를 바꾼다.
@@ -110,7 +110,7 @@ namespace kmh
 		*	@param	item	새로 교체할 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int replace(_Ty item);
+		bool replace(_Ty item);
 
 		/**
 		*	@brief	리스트에 아이템을 가져온다.
@@ -119,7 +119,7 @@ namespace kmh
 		*	@param	item	가져올 데이터.
 		*	@return 잘 작동했다면 1, 아니라면 0.
 		*/
-		int get(_Ty& item);
+		bool get(_Ty& item);
 
 		/**
 		*	@brief	리스트의 아이템을 검색하여 Iterator로 가져온다.
@@ -207,7 +207,7 @@ namespace kmh
 
 	// 리스트에 데이터를 추가한다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::add(_Ty item)
+	bool LinkedList<_Ty>::add(_Ty item)
 	{
 		NodeType<_Ty>* target = new NodeType<_Ty>(item);
 		NodeType<_Ty>* cur;
@@ -218,7 +218,7 @@ namespace kmh
 			m_First = target;
 			m_Last = target;
 			m_Length = 1;
-			return 1;
+			return true;
 		}
 		else
 		{
@@ -244,11 +244,11 @@ namespace kmh
 					}
 
 					m_Length++;
-					return 1;
+					return true;
 				}
 				// 만약 같은 데이터가 있다면
 				else if (item == cur->data)
-					return 0;
+					return false;
 				// 조건이 만족하지 않는다면
 				else
 					cur = cur->next;
@@ -258,19 +258,19 @@ namespace kmh
 			target->prev = m_Last;
 			m_Last = target;
 			m_Length++;
-			return 1;
+			return true;
 		}
 	}
 
 	// 데이터를 삭제한다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::remove(_Ty item)
+	bool LinkedList<_Ty>::remove(_Ty item)
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
 		if (is_empty())
-			return 0;
+			return false;
 		// 리스트가 1개만 있다면
 		else if (m_Length == 1)
 		{
@@ -278,7 +278,7 @@ namespace kmh
 			m_First = nullptr;
 			m_Last = nullptr;
 			m_Length = 0;
-			return 1;
+			return true;
 		}
 		else
 		{
@@ -306,24 +306,24 @@ namespace kmh
 					}
 					m_Length--;
 					delete temp;
-					return 1;
+					return true;
 				}
 				else
 					temp = temp->next;
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	// 리스트의 데이터를 변경한다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::replace(_Ty item)
+	bool LinkedList<_Ty>::replace(_Ty item)
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
 		if (is_empty())
-			return 0;
+			return false;
 		else
 		{
 			while (temp != nullptr)
@@ -332,24 +332,24 @@ namespace kmh
 				if (item == temp->data)
 				{
 					temp->data = item;
-					return 1;
+					return true;
 				}
 				else
 					temp = temp->next;
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	// 아이템과 일치하는 아이템을 리스트에서 가져온다.
 	template <typename _Ty>
-	int LinkedList<_Ty>::get(_Ty& item)
+	bool LinkedList<_Ty>::get(_Ty& item)
 	{
 		NodeType<_Ty>* temp = m_First;
 
 		// 리스트가 비었다면
 		if (is_empty())
-			return 0;
+			return false;
 		else
 		{
 			while (temp != nullptr)
@@ -358,17 +358,17 @@ namespace kmh
 				if (item == temp->data)
 				{
 					item = temp->data;
-					return 1;
+					return true;
 				}
 				else
 					temp = temp->next;
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	template<typename _Ty>
-	inline LIterator<_Ty> LinkedList<_Ty>::find(_Ty item)
+	LIterator<_Ty> LinkedList<_Ty>::find(_Ty item)
 	{
 		NodeType<_Ty>* temp = m_First;
 

@@ -29,6 +29,12 @@ void Application::run()
 			case 2:
 				m_Menu = MenuLevel::User;
 				break;
+			case 3:
+				load_file();
+				break;
+			case 4:
+				save_file();
+				break;
 			case 0:
 				exit(1);
 			default:
@@ -58,6 +64,7 @@ void Application::run()
 				display_conf_author();
 				break;
 			case 6:
+				select_conference();
 				m_Menu = MenuLevel::Paper;
 				break;
 			case 9:
@@ -149,6 +156,8 @@ int Application::get_command()
 		cout << ColorType::LPurple << "\t< 메인 메뉴 >" << ColorType::Default << endl << endl;
 		cout << "\t1. 관리자 메뉴" << endl;
 		cout << "\t2. 사용자 메뉴" << endl;
+		cout << "\t3. 불러오기" << endl;
+		cout << "\t4. 저장하기" << endl;
 	}
 	// 메뉴 레벨이 Conference
 	else if (m_Menu == MenuLevel::Conference)
@@ -197,4 +206,178 @@ int Application::get_command()
 	cout << endl;
 
 	return comm;
+}
+
+void Application::add_conference()
+{
+	system("cls");
+
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 학술대회 정보 추가 >" << ColorType::Default << endl << endl;
+
+	// 정보 입력받아 임시 저장하기.
+	ConferenceType temp;
+	temp.set_title_kb();
+	temp.set_date_kb();
+
+	// 저장 실패하면
+	if (!m_Conf.add(temp))
+	{
+		cout << ColorType::LRed << "\n\t[ERROR] 이미 있는 데이터입니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	// 메세지
+	cout << ColorType::LAqua << "\n\t추가되었습니다!" << ColorType::Default << endl;
+	_getch();
+}
+
+// Conference 메뉴에서 학술대회 삭제.
+void Application::delete_conference()
+{
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 학술대회 삭제 >" << ColorType::Default << endl << endl;
+
+	// 먼저 모두 출력
+	kmh::LIterator<ConferenceType> iter;
+	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+	{
+		(*iter).display_record();
+		cout << endl;
+	}
+
+	// 정보 입력받아 임시 저장하기.
+	ConferenceType temp;
+	cout << endl << "\t삭제할 학술대회 제목을 지정하십시오. " << endl;
+	temp.set_title_kb();
+
+	// conference 존재하는지 확인
+	kmh::LIterator<ConferenceType> siter = m_Conf.find(temp);
+	if (siter.is_null())
+	{
+		cout << endl << ColorType::LRed << "\t[ERROR] 잘못된 학술대회 ID 입력!" << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	if (m_Conf.remove(temp))
+		cout << endl << ColorType::LAqua << "\t삭제 완료!" << ColorType::Default << endl;
+	else
+		cout << endl << ColorType::LRed << "\t[ERROR]삭제 실패!" << ColorType::Default << endl;
+	_getch();
+}
+
+// Conference 메뉴에서 학술대회 변경.
+void Application::replace_conference()
+{
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 학술대회 정보 변경 >" << ColorType::Default << endl << endl;
+
+	// 정보 입력받아 임시 저장하기.
+	ConferenceType temp;
+	temp.set_title_kb();
+	temp.set_date_kb();
+
+	if (m_Conf.replace(temp) == false)
+	{
+		cout << ColorType::LRed << "\n\t[ERROR] 변경에 실패하였습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	// 메세지
+	cout << ColorType::LAqua << "\n\t데이터가 변경되었습니다!" << ColorType::Default << endl;
+	_getch();
+}
+
+void Application::select_conference()
+{
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 학술대회 메뉴 :: 학술대회 선택 >" << ColorType::Default << endl << endl;
+
+	// 먼저 모두 출력
+	kmh::LIterator<ConferenceType> iter;
+	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+	{
+		(*iter).display_record();
+		cout << endl;
+	}
+
+	// 정보 입력받아 임시 저장하기.
+	ConferenceType temp;
+	cout << endl << "\t삭제할 학술대회 제목을 지정하십시오. " << endl;
+	temp.set_title_kb();
+
+	// conference 존재하는지 확인
+	kmh::LIterator<ConferenceType> siter = m_Conf.find(temp);
+	if (siter.is_null())
+	{
+		cout << endl << ColorType::LRed << "\t[ERROR] 잘못된 학술대회 제목 입력!" << ColorType::Default << endl;
+	}
+	else
+	{
+		m_NowConf = &(*siter);
+		cout << ColorType::LAqua << "\n\t해당 학술대회가 선택되었습니다" << ColorType::Default << endl;
+	}
+	_getch();
+}
+
+void Application::display_conf_paper()
+{
+}
+
+void Application::display_conf_author()
+{
+}
+
+void Application::add_paper()
+{
+}
+
+void Application::delete_paper()
+{
+}
+
+void Application::replace_paper()
+{
+}
+
+void Application::display_paper()
+{
+}
+
+void Application::display_all_conference()
+{
+}
+
+void Application::display_all_paper()
+{
+}
+
+void Application::display_all_author()
+{
+}
+
+void Application::user_search_conference()
+{
+}
+
+void Application::user_search_paper()
+{
+}
+
+void Application::user_author_ranking()
+{
+}
+
+void Application::load_file()
+{
+}
+
+void Application::save_file()
+{
 }

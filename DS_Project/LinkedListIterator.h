@@ -64,7 +64,7 @@ namespace kmh
 		*	@pre	노드를 가지고 있어야 한다.
 		*	@return	nullptr이면 true.
 		*/
-		bool isNull();
+		bool is_null();
 
 		/**
 		*	@brief	NodeType의 data를 참조한다.
@@ -138,7 +138,7 @@ namespace kmh
 
 	// nullptr인지 확인.
 	template <typename _Ty>
-	bool LinkedListIterator<_Ty>::isNull()
+	bool LinkedListIterator<_Ty>::is_null()
 	{
 		return (val == nullptr);
 	}

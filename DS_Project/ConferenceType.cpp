@@ -12,7 +12,8 @@ ConferenceType::ConferenceType()
 
 ConferenceType::~ConferenceType()
 {
-	delete m_Papers;
+	if(m_Papers->length() > 0)
+		delete m_Papers;
 }
 
 void ConferenceType::set_date(string date)
@@ -28,6 +29,22 @@ void ConferenceType::set_date(string date)
 	m_YDate = atoi(first.c_str());
 	m_MDate = atoi(middle.c_str());
 	m_DDate = atoi(last.c_str());
+}
+
+void ConferenceType::set_title_kb()
+{
+	cout << "\t학술대회 제목 : ";
+	cin >> m_Title;
+	cout << endl;
+}
+
+void ConferenceType::set_date_kb()
+{
+	cout << "\t학술대회 개최 : ";
+	cin >> m_Date;
+	cout << endl;
+
+	set_date(m_Date);
 }
 
 void ConferenceType::add_paper(PaperType * paper)

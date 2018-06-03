@@ -80,6 +80,13 @@ public:
 	void replace_conference();
 
 	/**
+	*	@brief	학술대회를 선택한다.
+	*	@pre	없음.
+	*	@post	학술대회가 선택된다.
+	*/
+	void select_conference();
+
+	/**
 	*	@brief	학술대회에 포함된 논문을 모두 출력한다.
 	*	@pre	없음.
 	*	@post	학술대회에 포함된 논문을 모두 출력한다.
@@ -162,6 +169,20 @@ public:
 	*	@post	저자 랭킹이 출력된다.
 	*/
 	void user_author_ranking();
+
+	/**
+	*	@brief	파일로부터 데이터를 읽어온다.
+	*	@pre	없음.
+	*	@post	파일에서 데이터를 읽는다.
+	*/
+	void load_file();
+
+	/**
+	*	@brief	파일에 데이터를 저장한다.
+	*	@pre	없음.
+	*	@post	파일에 데이터가 저장된다.
+	*/
+	void save_file();
 
 private:
 	int m_Command;

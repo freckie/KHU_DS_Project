@@ -35,42 +35,42 @@ public:
 	~ConferenceType();
 
 	/**
-	*	@brief	논문 제목을 가져온다.
-	*	@pre	논문 제목이 설정되어야 한다.
+	*	@brief	학술대회 제목을 가져온다.
+	*	@pre	학술대회 제목이 설정되어야 한다.
 	*	@post	없음.
-	*	@return	논문 제목.
+	*	@return	학술대회 제목.
 	*/
 	string get_title() { return m_Title; }
 
 	/**
-	*	@brief	논문 날짜를 가져온다.
-	*	@pre	논문 날짜가 설정되어야 한다.
+	*	@brief	학술대회 날짜를 가져온다.
+	*	@pre	학술대회 날짜가 설정되어야 한다.
 	*	@post	없음.
-	*	@return	논문 날짜.
+	*	@return	학술대회 날짜.
 	*/
 	string get_date() { return m_Date; }
 
 	/**
-	*	@brief	논문 날짜(연도)를 가져온다.
-	*	@pre	논문 날짜가 설정되어야 한다.
+	*	@brief	학술대회 날짜(연도)를 가져온다.
+	*	@pre	학술대회 날짜가 설정되어야 한다.
 	*	@post	없음.
-	*	@return	논문 날짜(연도).
+	*	@return	학술대회 날짜(연도).
 	*/
 	int get_ydate() { return m_YDate; }
 
 	/**
-	*	@brief	논문 날짜(월)를 가져온다.
-	*	@pre	논문 날짜가 설정되어야 한다.
+	*	@brief	학술대회 날짜(월)를 가져온다.
+	*	@pre	학술대회 날짜가 설정되어야 한다.
 	*	@post	없음.
-	*	@return	논문 날짜(월).
+	*	@return	학술대회 날짜(월).
 	*/
 	int get_mdate() { return m_MDate; }
 
 	/**
-	*	@brief	논문 날짜(일)를 가져온다.
-	*	@pre	논문 날짜가 설정되어야 한다.
+	*	@brief	학술대회 날짜(일)를 가져온다.
+	*	@pre	학술대회 날짜가 설정되어야 한다.
 	*	@post	없음.
-	*	@return	논문 날짜(일).
+	*	@return	학술대회 날짜(일).
 	*/
 	int get_ddate() { return m_DDate; }
 
@@ -83,20 +83,34 @@ public:
 	kmh::List<PaperType*>* get_papers() { return m_Papers; }
 	
 	/**
-	*	@brief	논문 제목을 설정한다.
+	*	@brief	학술대회 제목을 설정한다.
 	*	@pre	없음.
 	*	@post	없음.
-	*	@param	title	논문 제목.
+	*	@param	title	학술대회 제목.
 	*/
 	void set_title(string title) { m_Title = title; }
 
 	/**
-	*	@brief	논문 개최 날짜를 설정한다.
+	*	@brief	학술대회 개최 날짜를 설정한다.
 	*	@pre	없음.
 	*	@post	없음.
-	*	@param	date	논문 개최 날짜.
+	*	@param	date	학술대회 개최 날짜.
 	*/
 	void set_date(string date);
+
+	/**
+	*	@brief	학술대회 이름를 키보드로부터 설정한다.
+	*	@pre	없음.
+	*	@post	없음.
+	*/
+	void set_title_kb();
+
+	/**
+	*	@brief	학술대회 개최 날짜를 키보드로부터 설정한다.
+	*	@pre	없음.
+	*	@post	없음.
+	*/
+	void set_date_kb();
 
 	/**
 	*	@brief	논문을 추가한다.
