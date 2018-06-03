@@ -490,6 +490,37 @@ void Application::delete_paper()
 
 void Application::replace_paper()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 논문 메뉴 :: 논문 변경 >" << ColorType::Default << endl << endl;
+	cout << ColorType::LGreen << "\t\t선택된 학술 대회 : " << m_NowConf->get_title()
+		<< " ( " << m_NowConf->get_papers()->length() << " )" << ColorType::Default << endl << endl;
+
+	// 정보 입력받아 임시 저장하기
+	PaperType* temp = new PaperType;
+	temp->set_title_kb();
+	temp->set_page_kb();
+	temp->set_author_kb();
+
+	// 논문 삭제하기.
+	kmh::BTreeNode<PaperType>* temp_node = m_Paper.get_node(*temp);
+
+	if (temp_node == nullptr)
+	{
+		cout << endl << ColorType::LRed
+			<< "\t[ERROR] 논문 변경에 실패하였습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	if (m_NowConf->get_papers()->replace(temp_node))
+		cout << ColorType::LAqua
+		<< "\n\t논문이 변경되었습니다!" << ColorType::Default << endl;
+	else
+		cout << endl << ColorType::LRed
+		<< "\t[ERROR] 논문 변경에 실패하였습니다." << ColorType::Default << endl;
+
+	_getch();
 }
 
 void Application::display_paper()
