@@ -17,6 +17,7 @@ namespace kmh
 		Key key;
 		Val val;
 
+		Pair() {}
 		Pair(Key key, Val val) : key(key), val(val) {}
 
 		friend bool operator<(Pair<Key, Val>& lhs, Pair<Key, Val>& rhs)

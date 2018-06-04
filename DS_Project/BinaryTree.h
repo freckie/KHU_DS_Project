@@ -483,6 +483,10 @@ namespace kmh
 	template<typename _Ty>
 	BTreeNode<_Ty>* BinaryTree<_Ty>::_get_node(BTreeNode<_Ty>* _Root, _Ty& _Item)
 	{
+		// 만약 현재 nullptr라면,
+		if (_Root == nullptr)
+			return nullptr;
+
 		// 찾는 값이 작다면
 		if (_Root->data > _Item)
 			return _get_node(_Root->left, _Item);

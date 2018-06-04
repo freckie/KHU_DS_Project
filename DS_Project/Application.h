@@ -14,6 +14,7 @@
 #include"BinaryTree.h"
 #include"LinkedList.h"
 #include"ArrayList.h"
+#include"Map.h"
 
 #include"ConferenceType.h"
 #include"PaperType.h"
@@ -122,13 +123,6 @@ public:
 	void replace_paper();
 
 	/**
-	*	@brief	논문을 화면에 출력한다.
-	*	@pre	없음.
-	*	@post	논문이 화면에 출력한다.
-	*/
-	void display_paper();
-
-	/**
 	*	@brief	학술대회를 모두 화면에 출력한다.
 	*	@pre	없음.
 	*	@post	학술대회가 모두 화면에 출력된다.
@@ -194,6 +188,7 @@ public:
 private:
 	int m_Command;
 	MenuLevel m_Menu;
+	kmh::Map<AuthorType, int> m_Author;
 	kmh::LinkedList<ConferenceType> m_Conf;
 	kmh::BinaryTree<PaperType> m_Paper;
 	ConferenceType* m_NowConf;

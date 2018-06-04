@@ -2,12 +2,12 @@
 
 AuthorType::AuthorType()
 {
-	m_Name = "";
+	m_Name = "noname";
 }
 
 AuthorType::AuthorType(const char * _name)
 {
-	m_Name = string(move(_name));
+	m_Name = string(_name);
 }
 
 AuthorType::AuthorType(string _name)

@@ -457,7 +457,26 @@ void Application::add_paper()
 		return;
 	}
 
+	// 논문 추가할 때, 저자도 추가.
 	m_NowConf->add_paper(temp_node);
+	kmh::ArrayList<AuthorType>* temp_author = temp_node->data.get_author();
+	for (auto iter = temp_author->begin(); iter != temp_author->end(); ++iter)
+	{
+		// 만약 저자 리스트가 비어있다면
+		if (m_Author.is_empty())
+		{
+			m_Author.emplace(*iter, 1);
+		}
+		else
+		{
+			// 만약 추가되지 않은 저자라면, 추가.
+			if (m_Author.find(*iter).is_null())
+				m_Author.emplace(*iter, 1);
+			// 추가되어있는 저자라면, 값++
+			else
+				(*(m_Author.find(*iter))).val++;
+		}
+	}
 
 	cout << ColorType::LAqua
 		<< "\n\t논문이 추가되었습니다!" << ColorType::Default << endl;
@@ -485,6 +504,17 @@ void Application::delete_paper()
 			<< "\t[ERROR] 논문 삭제에 실패하였습니다." << ColorType::Default << endl;
 		_getch();
 		return;
+	}
+
+	// 저자 카운트 삭제.
+	kmh::ArrayList<AuthorType>* temp_author = temp_node->data.get_author();
+	for (auto iter = temp_author->begin(); iter != temp_author->end(); ++iter)
+	{
+		auto found = m_Author.find(*iter);
+		if ((*found).val == 1)
+			m_Author.remove(*iter);
+		else
+			(*found).val--;
 	}
 
 	if(m_NowConf->get_papers()->remove(temp_node))
@@ -575,7 +605,10 @@ void Application::display_all_paper()
 	// 모두 출력
 	kmh::BIterator<PaperType> iter;
 	for (iter = m_Paper.begin(); iter != m_Paper.end(); ++iter)
+	{
 		(*iter).display_record();
+		cout << endl;
+	}
 
 	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
 	_getch();
@@ -583,6 +616,29 @@ void Application::display_all_paper()
 
 void Application::display_all_author()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 모든 저자 출력 >" << ColorType::Default << endl << endl;
+
+	// 리스트가 비었을 경우.
+	if (m_Author.is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	int idx = 1;
+	kmh::BIterator<kmh::Pair<AuthorType, int>> iter;
+	for (iter = m_Author.begin(); iter != m_Author.end(); ++iter)
+	{
+		cout << idx << ". " << (*iter).key.get_name()
+			<< " ( " << (*iter).val << " ) " << endl;
+		idx++;
+	}
+
+	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::user_search_conference()
