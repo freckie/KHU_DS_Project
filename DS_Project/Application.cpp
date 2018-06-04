@@ -829,34 +829,20 @@ void Application::load_file()
 
 		// 주석 확인
 		if (line[0] == '#')
-		{
 			continue;
-		}
 		else if (line[0] == 'c')
-		{
-			cout << "[DEBUG] " << idx << "번째 줄은 conference임\n";
 			temp_conf = _add_conference(line);
-		}
 		else if (line[0] == 'p')
-		{
-			cout << "[DEBUG] " << idx << "번째 줄은 paper임\n";
 			temp_paper = _add_paper(temp_conf, line);
-		}
 		else if (line[0] == 'a')
-		{
-			cout << "[DEBUG] " << idx << "번째 줄은 author임\n";
 			_add_author(temp_paper, line);
-		}
 		else
-		{
-			cout << "[DEBUG] " << idx << "번째 줄은 비어있는 줄\n";
 			continue;
-		}
 
 		idx++;
 	}
 
-	cout << "멈춤.";
+	cout << ColorType::LAqua << "\n\t파일 로드 완료되었습니다." << ColorType::Default << endl;
 	_getch();
 }
 
