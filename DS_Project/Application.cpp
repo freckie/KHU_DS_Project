@@ -2,7 +2,8 @@
 
 Application::Application()
 {
-	kmh::set_window_size(60, 25, "Conference Management System - 2017103964");
+	kmh::set_window_size(120, 35, "Conference Management System - 2017103964");
+	kmh::set_scroll_visible(120, 35, true);
 	m_Command = 0;
 	m_Menu = MenuLevel::Main;
 	m_NowConf = nullptr;
@@ -577,14 +578,21 @@ void Application::display_all_conference()
 	}
 
 	// 모두 출력
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	kmh::LIterator<ConferenceType> iter;
+	int count = 0;
 	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
 	{
 		(*iter).display_record();
 		cout << endl;
+		count++;
 	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
 
-	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
+	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다. :: "
+		<< count << "개 ( " << micro_sec.count() / 1000000.0 << "초 )"
+		<< ColorType::Default << endl;
 	_getch();
 }
 
@@ -603,14 +611,21 @@ void Application::display_all_paper()
 	}
 
 	// 모두 출력
+	int count = 0;
 	kmh::BIterator<PaperType> iter;
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	for (iter = m_Paper.begin(); iter != m_Paper.end(); ++iter)
 	{
 		(*iter).display_record();
 		cout << endl;
+		count++;
 	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
 
-	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
+	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다. :: " 
+		<< count << "개 ( " << micro_sec.count() / 1000000.0 << "초 )"
+		<< ColorType::Default << endl;
 	_getch();
 }
 
@@ -630,14 +645,19 @@ void Application::display_all_author()
 
 	int idx = 1;
 	kmh::LIterator<kmh::Pair<AuthorType, int>> iter;
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	for (iter = m_Author.begin(); iter != m_Author.end(); ++iter)
 	{
 		cout << "\t" << idx << ". " << (*iter).key.get_name()
 			<< " ( " << (*iter).val << " ) " << endl;
 		idx++;
 	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
 
-	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다." << ColorType::Default << endl;
+	cout << ColorType::LAqua << "\n\t결과를 모두 출력하였습니다. :: "
+		<< idx - 1 << "개 ( " << micro_sec.count() / 1000000.0 << "초 )"
+		<< ColorType::Default << endl;
 	_getch();
 }
 
@@ -653,16 +673,21 @@ void Application::user_search_conference()
 
 	// 데이터 검색 후 출력.
 	kmh::LIterator<ConferenceType> result = m_Conf.find(temp);
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	if (result.is_null())
 	{
 		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
 		_getch();
 		return;
 	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
 
 	(*result).display_record();
 
-	cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
+	cout << ColorType::LAqua << "\n\t검색 완료되었습니다. :: ( "
+		<< micro_sec.count() / 1000000.0 << "초 )" 
+		<< ColorType::Default << endl;
 	_getch();
 }
 
@@ -673,36 +698,44 @@ void Application::user_search_conference_year()
 	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 학술대회 연도로 검색 >" << ColorType::Default << endl << endl;
 
 	int year;
-cout << "\t연도 : ";
-cin >> year;
-cout << endl;
+	cout << "\t연도 : ";
+	cin >> year;
+	cout << endl;
 
-bool found = false;
+	bool found = false;
 
-// 데이터 검색 후 출력.
-kmh::LIterator<ConferenceType> iter;
-for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
-{
-	if ((*iter).get_ydate() == year)
+	// 데이터 검색 후 출력.
+	kmh::LIterator<ConferenceType> iter;
+	int count = 0;
+	chrono::system_clock::time_point start = chrono::system_clock::now();
+	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
 	{
-		(*iter).display_record();
-		found = true;
-	}
-}
+		if ((*iter).get_ydate() == year)
+		{
+			(*iter).display_record();
+			found = true;
+			count++;
+		}
 
-// 검색 결과가 없을 경우
-if (!found)
-{
-	cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
-	_getch();
-	return;
-}
-// 검색 결과가 있을 경우
-else
-{
-	cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
-	_getch();
-}
+	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
+
+	// 검색 결과가 없을 경우
+	if (!found)
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+	// 검색 결과가 있을 경우
+	else
+	{
+		cout << ColorType::LAqua << "\n\t검색 완료되었습니다. :: " 
+			<< count << "개 ( " << micro_sec.count() / 1000000.0 << "초 )"
+			<< ColorType::Default << endl;
+		_getch();
+	}
 }
 
 void Application::user_search_paper()
@@ -718,16 +751,24 @@ void Application::user_search_paper()
 
 	// 검색
 	bool found = false;
-	cout << endl << "\t--- 검색 결과 ---" << endl;
+	cout << endl << "\t--- 검색 결과 ---" << endl << endl;
 	kmh::BIterator<PaperType> iter;
+	int count = 0;
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	for (iter = m_Paper.begin(); iter != m_Paper.end(); ++iter)
 	{
 		if ((*iter).get_title().find(keyword) != string::npos)
 		{
 			found = true;
 			(*iter).display_record();
+			cout << endl;
+			count++;
 		}
 	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
+
+	//cout << "\n\n\t"<< count << "개 ( " << micro_sec.count() / 1000000.0 << "초 )" << endl;
 
 	// 검색 결과가 없을 경우
 	if (!found)
@@ -739,7 +780,9 @@ void Application::user_search_paper()
 	// 검색 결과가 있을 경우
 	else
 	{
-		cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
+		cout << ColorType::LAqua << "\n\t검색 완료되었습니다. :: " 
+			<< count << "개 ( " << micro_sec.count() / 1000000.0 << "초 )"
+			<< ColorType::Default << endl;
 		_getch();
 	}
 }
@@ -823,6 +866,7 @@ void Application::load_file()
 	int idx = 0;
 	kmh::NodeType<ConferenceType>* temp_conf = nullptr;
 	kmh::BTreeNode<PaperType>* temp_paper = nullptr;
+	chrono::system_clock::time_point start = chrono::system_clock::now();
 	while (!fin.eof())
 	{
 		getline(fin, line);
@@ -841,8 +885,12 @@ void Application::load_file()
 
 		idx++;
 	}
+	chrono::system_clock::time_point end = chrono::system_clock::now();
+	chrono::microseconds micro_sec = chrono::duration_cast<chrono::microseconds>(end - start);
 
-	cout << ColorType::LAqua << "\n\t파일 로드 완료되었습니다." << ColorType::Default << endl;
+	cout << ColorType::LAqua << "\n\t파일 로드 완료되었습니다. :: "
+		<< "( " << micro_sec.count() / 1000000.0 << "초 )"
+		<< ColorType::Default << endl;
 	_getch();
 }
 

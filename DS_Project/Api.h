@@ -37,11 +37,21 @@ namespace kmh
 	*	@brief	window console 창의 크기 및 이름을 설정한다.
 	*	@pre	없음.
 	*	@post	window console 창이 세팅된다.
-	*	@param	col	console 창의 열 수 (int)
+	*	@param	col		console 창의 열 수 (int)
 	*	@param	line	console 창의 행 수 (int)
 	*	@param	title	console 창의 제목 (char*)
 	*/
 	void set_window_size(int col, int line, const char* title);
+
+	/**
+	*	@brief	window console 창의 스크롤바를 세팅한다.
+	*	@pre	없음.
+	*	@post	window console 창의 스크롤바가 세팅된다.
+	*	@param	col		console 창의 열 수 (int)
+	*	@param	line	console 창의 행 수 (int)
+	*	@param	visible	스크롤바 상태.
+	*/
+	void set_scroll_visible(int col, int line, bool visible);
 
 	/**
 	*	@brief	콘솔 출력의 색깔을 변경한다.

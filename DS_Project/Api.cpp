@@ -20,6 +20,32 @@ void kmh::set_window_size(int col, int line, const char* title)
 	system(tempchar2);
 }
 
+void kmh::set_scroll_visible(int col, int line, bool visible)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	GetConsoleScreenBufferInfo(handle, &info);
+	COORD new_size;
+	// 스크롤바 보이지 않게 세팅했을 경우
+	if (!visible)
+	{
+		new_size =
+		{
+			info.srWindow.Right - info.srWindow.Left + 1,
+			info.srWindow.Bottom - info.srWindow.Top + 1
+		};
+	}
+	else
+	{
+		new_size =
+		{
+			static_cast<SHORT>(col),
+			static_cast<SHORT>(line + 100)
+		};
+	}
+	SetConsoleScreenBufferSize(handle, new_size);
+}
+
 // color 설정.
 void kmh::set_color(ColorType color)
 {
