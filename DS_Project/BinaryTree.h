@@ -204,9 +204,9 @@ namespace kmh
 		BTreeNode<_Ty>* _get_max_node(BTreeNode<_Ty>* _Node);
 	};
 
-	/***************/
-	/* 비 멤버 함수 */
-	/***************/
+	/**
+	* 비 멤버 함수
+	*/
 	template <typename _Ty>
 	BTreeNode<_Ty>* _get_next_node(BTreeNode<_Ty>* _Node);
 
@@ -228,9 +228,9 @@ namespace kmh
 	template <typename _Ty, class Func>
 	void _post_order(BTreeNode<_Ty>* _Node, Func _Func);
 
-	/************/
-	/* 멤버 함수 */
-	/************/
+	/**
+	* 멤버 함수
+	*/
 
 	// 생성자
 	template <typename _Ty>
