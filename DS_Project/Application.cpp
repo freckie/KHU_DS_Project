@@ -917,16 +917,7 @@ void Application::_add_author(kmh::BTreeNode<PaperType>* paper, string line)
 		else
 			authors.add(token);
 	}
-
-	// Paper에 등록
-	AuthorType* temp_ptr = paper->data.get_author()->data();
-	paper->data.get_author()->realloc(authors.length());
-	int idx = 0;
-	for (auto iter = authors.begin(); iter != authors.end(); ++iter)
-	{
-		temp_ptr[idx].set_name(*iter);
-		idx++;
-	}
+	paper->data.set_author(authors);
 
 	// Paper List에 등록
 	kmh::ArrayList<AuthorType>* temp_author = paper->data.get_author();

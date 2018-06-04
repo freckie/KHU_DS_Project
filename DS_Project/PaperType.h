@@ -91,6 +91,14 @@ public:
 	*	@post	저자를 설정된다.
 	*	@param	author	저자 이름이 담긴 ArrayList.
 	*/
+	void set_author(kmh::LinkedList<string>& author);
+
+	/**
+	*	@brief	저자를 설정한다.
+	*	@pre	없음.
+	*	@post	저자를 설정된다.
+	*	@param	author	저자 이름이 담긴 ArrayList.
+	*/
 	void set_author(kmh::ArrayList<AuthorType>& author);
 
 	/**

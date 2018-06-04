@@ -29,6 +29,20 @@ void PaperType::set_title(string title)
 	m_Title = title;
 }
 
+void PaperType::set_author(kmh::LinkedList<string>& author)
+{
+	m_Author = new kmh::ArrayList<AuthorType>(author.length());
+
+	// 객체 생성 후 복사
+	AuthorType* ptr = m_Author->data();
+	int idx = 0;
+	for (auto iter = author.begin(); iter != author.end(); ++iter)
+	{
+		ptr[idx] = AuthorType(*iter);
+		idx++;
+	}
+}
+
 void PaperType::set_author(kmh::ArrayList<AuthorType>& author)
 {
 	m_Author = new kmh::ArrayList<AuthorType>(author);
