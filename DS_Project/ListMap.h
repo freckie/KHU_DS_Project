@@ -1,15 +1,15 @@
 #pragma once
 
-#ifndef _MAP_H
-#define _MAP_H
+#ifndef _LIST_ListMap_H
+#define _LIST_ListMap_H
 
-#include"BinaryTreeIterator.h"
-#include"BinaryTree.h"
+#include"LinkedListIterator.h"
+#include"LinkedList.h"
 
 namespace kmh
 {
 	/**
-	*	Map에 사용하는 Struct
+	*	ListMap에 사용하는 Struct
 	*/
 	template <typename Key, typename Val>
 	struct Pair
@@ -42,28 +42,28 @@ namespace kmh
 	};
 
 	template <typename Key, typename Val>
-	Pair<Key, Val> make_map_pair(Key key, Val val)
+	Pair<Key, Val> make_ListMap_pair(Key key, Val val)
 	{
 		return Pair<Key, Val>(key, val);
 	}
 
 	/**
-	*	Binary Search Tree를 이용한 Map
+	*	Doubly-Linked List를 이용한 ListMap
 	*/
 	template <typename Key, typename Val>
-	class Map
+	class ListMap
 	{
 
 	public:
 		/**
 		*	기본 생성자.
 		*/
-		Map() {}
+		ListMap() {}
 
 		/**
 		*	소멸자.
 		*/
-		~Map() {}
+		~ListMap() {}
 
 		/**
 		*	@brief	Tree가 비었는지 확인한다.
@@ -71,15 +71,7 @@ namespace kmh
 		*	@post	없음.
 		*	@return	비었으면 true, 아니라면 false.
 		*/
-		bool is_empty() const;
-
-		/**
-		*	@brief	Tree에 추가할 수 있는지 확인한다.
-		*	@pre	없음.
-		*	@post	없음.
-		*	@return	추가할 수 없다면 true, 아니라면 false.
-		*/
-		bool is_full() const;
+		bool is_empty();
 
 		/**
 		*	@brief	Tree를 모두 비운다.
@@ -115,15 +107,6 @@ namespace kmh
 		bool add(Pair<Key, Val>&& _Pair);
 
 		/**
-		*	@brief	Tree에 데이터를 추가하고, 데이터의 포인터를 반환한다.
-		*	@pre	없음.
-		*	@post	없음.
-		*	@param	_Item	추가할 데이터.
-		*	@return	추가한 데이터의 노드 포인터. 추가 실패라면 nullptr.
-		*/
-		BTreeNode<Pair<Key, Val>>* add_and_get(Pair<Key, Val>& _Item);
-
-		/**
 		*	@brief	Tree에 Pair 객체를 만들어추가한다.
 		*	@pre	없음.
 		*	@post	없음.
@@ -148,7 +131,7 @@ namespace kmh
 		*	@post	없음.
 		*	@return	제일 작은 값의 iterator.
 		*/
-		BinaryTreeIterator<Pair<Key, Val>> begin();
+		LinkedListIterator<Pair<Key, Val>> begin();
 
 		/**
 		*	@brief	Tree의 제일 큰 값 다음의 iterator를 반환한다.
@@ -156,7 +139,7 @@ namespace kmh
 		*	@post	없음.
 		*	@return	nullptr 담긴 iterator.
 		*/
-		BinaryTreeIterator<Pair<Key, Val>> end();
+		LinkedListIterator<Pair<Key, Val>> end();
 
 		/**
 		*	@brief	Tree에서 item검색하여 iterator로 반환.
@@ -165,90 +148,78 @@ namespace kmh
 		*	@param	_Key	iterator 얻고 싶은 key
 		*	@return	일치하는 값을 가진 iterator.
 		*/
-		BinaryTreeIterator<Pair<Key, Val>> find(Key _Key);
+		LinkedListIterator<Pair<Key, Val>> find(Key _Key);
 
 	private:
-		kmh::BinaryTree<Pair<Key, Val>> _Tree;
+		kmh::LinkedList<Pair<Key, Val>> _List;
 
 	};
 
 	template<typename Key, typename Val>
-	bool Map<Key, Val>::is_empty() const
+	bool ListMap<Key, Val>::is_empty()
 	{
-		return _Tree.is_empty();
+		return _List.is_empty();
 	}
 
 	template<typename Key, typename Val>
-	bool Map<Key, Val>::is_full() const
+	void ListMap<Key, Val>::make_empty()
 	{
-		return _Tree.is_full();
+		_List.make_empty();
 	}
 
 	template<typename Key, typename Val>
-	void Map<Key, Val>::make_empty()
+	int ListMap<Key, Val>::length() const
 	{
-		_Tree.make_empty();
+		return _List.length();
 	}
 
 	template<typename Key, typename Val>
-	int Map<Key, Val>::length() const
+	bool ListMap<Key, Val>::add(Pair<Key, Val>& _Pair)
 	{
-		return _Tree.length();
+		return _List.add(_Pair);
 	}
 
 	template<typename Key, typename Val>
-	bool Map<Key, Val>::add(Pair<Key, Val>& _Pair)
+	bool ListMap<Key, Val>::add(Pair<Key, Val>&& _Pair)
 	{
-		return _Tree.add(_Pair);
+		return _List.add(_Pair);
 	}
 
 	template<typename Key, typename Val>
-	bool Map<Key, Val>::add(Pair<Key, Val>&& _Pair)
+	bool ListMap<Key, Val>::emplace(Key _Key, Val _Val)
 	{
-		return _Tree.add(_Pair);
+		return _List.add(make_ListMap_pair(_Key, _Val));
 	}
 
 	template<typename Key, typename Val>
-	BTreeNode<Pair<Key, Val>>* Map<Key, Val>::add_and_get(Pair<Key, Val>& _Item)
-	{
-		return _Tree.add_and_get(_Item);
-	}
-
-	template<typename Key, typename Val>
-	bool Map<Key, Val>::emplace(Key _Key, Val _Val)
-	{
-		return _Tree.add(make_map_pair(_Key, _Val));
-	}
-
-	template<typename Key, typename Val>
-	bool Map<Key, Val>::remove(Key _Key)
+	bool ListMap<Key, Val>::remove(Key _Key)
 	{
 		Pair<Key, Val> temp;
 		temp.key = _Key;
 
-		return _Tree.remove(temp);
+		return _List.remove(temp);
 	}
 
 	template<typename Key, typename Val>
-	BinaryTreeIterator<Pair<Key, Val>> Map<Key, Val>::begin()
+	LinkedListIterator<Pair<Key, Val>> ListMap<Key, Val>::begin()
 	{
-		return _Tree.begin();
+		return _List.begin();
 	}
 
 	template<typename Key, typename Val>
-	BinaryTreeIterator<Pair<Key, Val>> Map<Key, Val>::end()
+	LinkedListIterator<Pair<Key, Val>> ListMap<Key, Val>::end()
 	{
-		return _Tree.end();
+		return _List.end();
 	}
 
 	template<typename Key, typename Val>
-	BinaryTreeIterator<Pair<Key, Val>> Map<Key, Val>::find(Key _Key)
+	LinkedListIterator<Pair<Key, Val>> ListMap<Key, Val>::find(Key _Key)
 	{
 		Pair<Key, Val> temp;
 		temp.key = _Key;
 
-		return _Tree.find(temp);
+		return _List.find(temp);
 	}
 }
 
-#endif _MAP_H
+#endif _ListMap_H

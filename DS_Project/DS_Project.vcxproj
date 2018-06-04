@@ -153,7 +153,7 @@
     <ClInclude Include="ConferenceType.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedListIterator.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="ListMap.h" />
     <ClInclude Include="PaperType.h" />
   </ItemGroup>
   <ItemGroup>

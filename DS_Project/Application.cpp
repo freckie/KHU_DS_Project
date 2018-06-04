@@ -629,10 +629,10 @@ void Application::display_all_author()
 	}
 
 	int idx = 1;
-	kmh::BIterator<kmh::Pair<AuthorType, int>> iter;
+	kmh::LIterator<kmh::Pair<AuthorType, int>> iter;
 	for (iter = m_Author.begin(); iter != m_Author.end(); ++iter)
 	{
-		cout << idx << ". " << (*iter).key.get_name()
+		cout << "\t" << idx << ". " << (*iter).key.get_name()
 			<< " ( " << (*iter).val << " ) " << endl;
 		idx++;
 	}
@@ -746,6 +746,10 @@ void Application::user_search_paper()
 
 void Application::user_author_ranking()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 저자 랭킹 >" << ColorType::Default << endl << endl;
+
 }
 
 void Application::load_file()

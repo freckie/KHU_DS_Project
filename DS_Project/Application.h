@@ -14,7 +14,7 @@
 #include"BinaryTree.h"
 #include"LinkedList.h"
 #include"ArrayList.h"
-#include"Map.h"
+#include"ListMap.h"
 
 #include"ConferenceType.h"
 #include"PaperType.h"
@@ -188,7 +188,7 @@ public:
 private:
 	int m_Command;
 	MenuLevel m_Menu;
-	kmh::Map<AuthorType, int> m_Author;
+	kmh::ListMap<AuthorType, int> m_Author;
 	kmh::LinkedList<ConferenceType> m_Conf;
 	kmh::BinaryTree<PaperType> m_Paper;
 	ConferenceType* m_NowConf;
