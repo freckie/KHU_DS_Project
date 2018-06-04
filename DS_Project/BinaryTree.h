@@ -100,6 +100,15 @@ namespace kmh
 		*	@param	_Item	추가할 데이터.
 		*	@return	성공 여부.
 		*/
+		bool add(_Ty&& _Item);
+
+		/**
+		*	@brief	Tree에 데이터를 추가한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Item	추가할 데이터.
+		*	@return	성공 여부.
+		*/
 		bool add(_Ty& _Item);
 
 		/**
@@ -274,6 +283,13 @@ namespace kmh
 	int BinaryTree<_Ty>::length() const
 	{
 		return _count_nodes(_Root);
+	}
+
+	template<typename _Ty>
+	bool BinaryTree<_Ty>::add(_Ty&& _Item)
+	{
+		_insert_node(_Root, _Root, _Item);
+		return true;
 	}
 
 	// Tree에 BTreeNode 추가

@@ -19,14 +19,32 @@ namespace kmh
 
 		Pair(Key key, Val val) : key(key), val(val) {}
 
-		friend bool operator<(Pair& lhs, Pair& rhs);
-		friend bool operator>(Pair& lhs, Pair& rhs);
-		friend bool operator==(Pair& lhs, Pair& rhs);
-		friend bool operator!=(Pair& lhs, Pair& rhs);
+		friend bool operator<(Pair<Key, Val>& lhs, Pair<Key, Val>& rhs)
+		{
+			return (lhs.key < rhs.key);
+		}
+
+		friend bool operator>(Pair<Key, Val>& lhs, Pair<Key, Val>& rhs)
+		{
+			return (lhs.key > rhs.key);
+		}
+
+		friend bool operator==(Pair<Key, Val>& lhs, Pair<Key, Val>& rhs)
+		{
+			return (lhs.key == rhs.key);
+		}
+
+		friend bool operator!=(Pair<Key, Val>& lhs, Pair<Key, Val>& rhs)
+		{
+			return (lhs.key != rhs.key);
+		}
 	};
 
 	template <typename Key, typename Val>
-	Pair<Key, Val>& make_map_pair(Key key, Val val);
+	Pair<Key, Val> make_map_pair(Key key, Val val)
+	{
+		return Pair<Key, Val>(key, val);
+	}
 
 	/**
 	*	Binary Search Tree를 이용한 Map
@@ -84,7 +102,16 @@ namespace kmh
 		*	@param	_Pair	추가할 데이터.
 		*	@return	성공 여부.
 		*/
-		bool add(Pair& _Pair);
+		bool add(Pair<Key, Val>& _Pair);
+
+		/**
+		*	@brief	Tree에 데이터를 추가한다.
+		*	@pre	없음.
+		*	@post	없음.
+		*	@param	_Pair	추가할 데이터.
+		*	@return	성공 여부.
+		*/
+		bool add(Pair<Key, Val>&& _Pair);
 
 		/**
 		*	@brief	Tree에 데이터를 추가하고, 데이터의 포인터를 반환한다.
@@ -103,7 +130,7 @@ namespace kmh
 		*	@param	_Val	추가할 데이터.
 		*	@return	성공 여부.
 		*/
-		bool emplace(Key& _Key, Val& _Val);
+		bool emplace(Key _Key, Val _Val);
 
 		/**
 		*	@brief	Tree에서 데이터를 삭제한다.
@@ -175,15 +202,22 @@ namespace kmh
 	}
 
 	template<typename Key, typename Val>
+	bool Map<Key, Val>::add(Pair<Key, Val>&& _Pair)
+	{
+		return _Tree.add(_Pair);
+	}
+
+	template<typename Key, typename Val>
 	BTreeNode<Pair<Key, Val>>* Map<Key, Val>::add_and_get(Pair<Key, Val>& _Item)
 	{
 		return _Tree.add_and_get(_Item);
 	}
 
 	template<typename Key, typename Val>
-	bool Map<Key, Val>::emplace(Key& _Key, Val& _Val)
+	bool Map<Key, Val>::emplace(Key _Key, Val _Val)
 	{
-		return _Tree.add(make_map_pair(_Key, _Val));
+		//return _Tree.add(make_map_pair(_Key, _Val));
+		return true;
 	}
 
 	template<typename Key, typename Val>
