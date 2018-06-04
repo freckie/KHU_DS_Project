@@ -217,8 +217,7 @@ namespace kmh
 	template<typename Key, typename Val>
 	bool Map<Key, Val>::emplace(Key _Key, Val _Val)
 	{
-		//return _Tree.add(make_map_pair(_Key, _Val));
-		return true;
+		return _Tree.add(make_map_pair(_Key, _Val));
 	}
 
 	template<typename Key, typename Val>
