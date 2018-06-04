@@ -673,36 +673,36 @@ void Application::user_search_conference_year()
 	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 학술대회 연도로 검색 >" << ColorType::Default << endl << endl;
 
 	int year;
-	cout << "\t연도 : ";
-	cin >> year;
-	cout << endl;
+cout << "\t연도 : ";
+cin >> year;
+cout << endl;
 
-	bool found = false;
+bool found = false;
 
-	// 데이터 검색 후 출력.
-	kmh::LIterator<ConferenceType> iter;
-	for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+// 데이터 검색 후 출력.
+kmh::LIterator<ConferenceType> iter;
+for (iter = m_Conf.begin(); iter != m_Conf.end(); ++iter)
+{
+	if ((*iter).get_ydate() == year)
 	{
-		if ((*iter).get_ydate() == year)
-		{
-			(*iter).display_record();
-			found = true;
-		}
+		(*iter).display_record();
+		found = true;
 	}
+}
 
-	// 검색 결과가 없을 경우
-	if(!found)
-	{
-		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
-		_getch();
-		return;
-	}
-	// 검색 결과가 있을 경우
-	else
-	{
-		cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
-		_getch();
-	}
+// 검색 결과가 없을 경우
+if (!found)
+{
+	cout << endl << ColorType::LRed << "\t검색 결과가 없습니다. 정확한 학술대회 이름을 입력해주세요." << ColorType::Default << endl;
+	_getch();
+	return;
+}
+// 검색 결과가 있을 경우
+else
+{
+	cout << ColorType::LAqua << "\n\t검색 완료되었습니다." << ColorType::Default << endl;
+	_getch();
+}
 }
 
 void Application::user_search_paper()
@@ -750,6 +750,53 @@ void Application::user_author_ranking()
 	cout << endl << endl;
 	cout << ColorType::LPurple << "\t< 사용자 메뉴 :: 저자 랭킹 >" << ColorType::Default << endl << endl;
 
+	if (m_Author.is_empty())
+	{
+		cout << endl << ColorType::LRed << "\t검색 결과가 없습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	// 랭킹 정하기.
+	auto iter = m_Author.begin();
+	kmh::Pair<AuthorType, int>* ranks[3];
+	ranks[0] = &*iter;	// 첫번째 원소의 주소 저장.
+	ranks[1] = new kmh::Pair<AuthorType, int>(AuthorType(), 0);
+	ranks[2] = new kmh::Pair<AuthorType, int>(AuthorType(), 0);
+	for (++iter; iter != m_Author.end(); ++iter)
+	{
+		// 만약 제일 크다면,
+		if ((*iter).val > ranks[0]->val)
+		{
+			ranks[2] = ranks[1];
+			ranks[1] = ranks[0];
+			ranks[0] = &*iter;
+		}
+		// 2등이라면,
+		else if (((*iter).val > ranks[1]->val) && ((*iter).val <= ranks[0]->val))
+		{
+			ranks[2] = ranks[1];
+			ranks[1] = &*iter;
+		}
+		// 3등이라면,
+		else if (((*iter).val > ranks[2]->val) && ((*iter).val <= ranks[1]->val))
+		{
+			ranks[2] = &*iter;
+		}
+	}
+
+	// 출력
+	cout << ColorType::LYellow << "\t1. " << ranks[0]->key.get_name () << " ( " << ranks[0]->val << " )\n";
+	if (ranks[1]->val != 0)
+	{
+		cout << ColorType::Gray << "\t2. " << ranks[1]->key.get_name() << " ( " << ranks[1]->val << " )\n";
+		cout << ColorType::LRed << "\t3. " << ranks[2]->key.get_name() << " ( " << ranks[2]->val << " )\n";
+	}
+
+	cout << ColorType::Default;
+
+	cout << ColorType::LAqua << "\n\t출력 완료되었습니다." << ColorType::Default << endl;
+	_getch();
 }
 
 void Application::load_file()

@@ -3,6 +3,7 @@
 #ifndef _APPLICATION_H
 #define _APPLICATION_H
 
+#include<algorithm>
 #include<Windows.h>
 #include<iostream>
 #include<conio.h>
