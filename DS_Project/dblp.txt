@@ -1,0 +1,100 @@
+#	Conference	\n
+#		name	\n
+#		date	\n
+#	Paper	\n
+#		title	\n
+#		page	\n
+#		author	\n
+
+
+c	3DV_Vision	2016.10.25	\n
+p	Matching_Deformable_Objects_in_Clutter	1-10	\n
+a	LucaCosmo	EmanueleRodola	Jonathan_Masci	\n
+p	Progressive_3D_Modeling_All_the_Way	11-18	\n
+a	AlexLocher	MichalHavlena	LucVanGool	\n
+p	A_Hybrid_Structure/Trajectory_Constraint_for_Visual_SLAM	19-27	\n
+a	AngeliqueLoesch	SteveBourgeois	Vincent	MichelDhome	\n
+p	Real-Time_Surface_of_Revolution_Reconstruction_on_Dense_SLAM	28-36	\n
+a	LimingYang	HideakiUchiyama	\n
+p	Monocular,_Real-Time_Surface_Reconstruction_Using_Dynamic_Level_of_Detail	37-46	\n
+a	JacekZienkiewicz	AkisTsiotsios	AndrewDavison	StefanLeutenegger	\n
+p	Energy-Based_Global_Ternary_Image_for_Action_Recognition_Using_Sole_Depth_Sequences	47-55	\n
+a	MengyuanLiu	HongLiu	ChenChen	MaryamNajafian	\n
+p	Robust_Recovery_of_Heavily_Degraded_Depth_Measurements	56-65	\n
+a	GiladDrozdov	YevgengyShapiro	GuyGilboa	\n
+p	Fast_Obstacle_Detection_Using_Sparse_Edge-Based_Disparity_Maps	66-72	\n
+a	DexmontAlejandro	Carrillo	Alistair	\n
+p	A_Large-Scale_3D_Object_Recognition_Dataset	73-82	\n
+a	Henrik_Aanes	\n
+p	Robust_Feature-Preserving_Denoising_of_3D_Point_Clouds	83-91	\n
+a	SkMohammadulHaque	VenuMadhavGovindu	\n
+p	SceneNN:_A_Scene_Meshes_Dataset_with_aNNotations	92-101	\n
+a	Binh-Son_Hua	Quang-Hieu_Pham	Duc_Thanh_Nguyen	Minh-Khoi_Tran	\n
+p	Registration_of_Point_Clouds_Based_on_the_Ratio_of_Bidirectional_Distances	102-107	\n
+a	Jihua_Zhu	Di_Wang	Xiuxiu_Bai	Huimin_Lu	Congcong_Jin	Zhongyu_Li	\n
+p	HS-Nets:_Estimating_Human_Body_Shape_from_Silhouettes_with_Convolutional_Neural_Networks	108-117	\n
+a	Endri_Dibra	Himanshu_Jain	A._Cengiz_Oztireli	Remo_Ziegler	Markus_H._Gross	\n
+c	ACII	2017.10.23	\n
+p	Automated_mood-aware_engagement_prediction	1-8	\n
+a	Svati_Dhamija	Terrance_E._Boult	\n
+p	How_different_identities_affect_cooperation	9-14	\n
+a	Wasif_Khan	Jesse_Hoey	\n
+p	What_really_matters_-_An_information_gain_analysis	15-20	\n
+a	Torsten_Wortwein	Stefan_Scherer	\n
+p	NAA:_A_multimodal_database_of_negative_affect_and_aggression	21-27	\n
+a	Iulia_Lefter	Catholijn_M._Jonker	Stephanie_Klein_Tuente	Wim_Veling	Stefan_Bogaerts	\n
+p	Recognizing_induced_emotions_of_movie_audiences:_Are_induced_and_perceived_emotions_the_same	28-35	\n
+a	Leimin_Tian	Michal_Muszynski	Catherine_Lai	Johanna_D._Moore	Theodoros_Kostoulas	Patrizia_Lombardo	Thierry_Pun	Guillaume_Chanel	\n
+p	Effects_of_valence_and_arousal_on_working_memory_performance_in_virtual_reality_gaming	36-41	\n
+a	Daniel_Gabana_Arellano	Laurissa_N._Tokarchuk	Emily_Hannon	Hatice_Gunes	\n
+p	Computational_model_of_idiosyncratic_perception_of_others'_emotions	42-49	\n
+a	Shiro_Kumano	Ryo_Ishii	Kazuhiro_Otsuka	\n
+p	Comparing_empathy_perceived_by_interlocutors_in_multiparty_conversation_and_external_observers	50-57	\n
+a	Shiro_Kumano	Ryo_Ishii	Kazuhiro_Otsuka	\n
+c	VISAPP	2018.01.27	\n
+p	Towards_an_Augmented_Reality_Head_Mounted_Display_System	17-27	\n
+a	Jessica_Combier	Bertrand_Vandeportaele	Patrick_Danes	\n
+p	Infrared_Image_Enhancement_in_Maritime_Environment_with_Convolutional_Neural_Networks	37-46	\n
+a	Purbaditya_Bhattacharya	\n
+p	A_Real-Time_Edge-Preserving_Denoising_Filter	85-94	\n
+a	Simon_Reich	Florentin_Worgotter	Babette_Dellen	\n
+p	Efficient_Projective_Transformation_and_Lanczos_Interpolation	95-100	\n
+a	Konstantinos_Papadopoulos	Kyriakos_Vlachos	\n
+p	Joint_Brightness_and_Tone_Stabilization_of_Capsule_Endoscopy_Videos	101-112	\n
+a	Sibren_van_Vliet	Andre_Sobiecki	Alexandru_Telea	\n
+c	PACIS	2017.07.16	\n
+p	Investigating_the_Use_of_MOOCs:_An_Innovation_Adoption_Perspective	29	\n
+a	Long_Ma	Chei_Sian_Lee	\n
+p	Research_Perspective_in_Enterprise_Architecture	37	\n
+a	Hamood_Al-Kharusi	Suraya_Miskon	Mahadi_Bahari	\n
+p	A_Bibliographic_Network_Analysis_of_Big_Data_Literature	38	\n
+a	Ryuichi_Hosoya	Zhenhao_Ding	Taro_Kamioka	\n
+p	Understanding_the_Continuous_Use_of_Fitness_Trackers:_A_Thematic_Analysis	40	\n
+a	Moritz_Becker	Andreas_Kolbeck	Christian_Matt	Thomas_Hess	\n
+c	DAI	1998.05.01	\n
+p	Team_Formation_by_Self-Interested_Mobile_Agents	1-15	\n
+a	Stanislaw_Ambroszkiewicz	Olaf_Matyja	Wojciech_Penczek	\n
+p	Conception,_Behavioral_Semantics_and_Formal_Specification_of_Multi-Agent_Systems	16-28	\n
+a	Walid_Chainbi	Mohamed_Jmaiel	Abdelmajid_Ben_Hamadou	\n
+p	Learning_Message-Related_Coordination_Control_in_Multiagent_Systems	29-44	\n
+a	Toshiharu_Sugawara	Satoshi_Kurihara	\n
+c	MACIS	2017.11.15	\n
+p	Certification_Using_Newton-Invariant_Subspaces	34-50	\n
+a	Jonathan_D._Hauenstein	\n
+p	Decomposition_of_Low_Rank_Multi-symmetric_Tensor	51-66	\n
+a	Jouhayna_Harmouch	Bernard_Mourrain	Houssam_Khalil	\n
+p	Efficient_Certification_of_Numeric_Solutions_to_Eigenproblems	81-94	\n
+a	Joris_van_der_Hoeven	Bernard_Mourrain	\n
+c	TAP	2016.06.05	\n
+p	Monadic_Sequence_Testing_and_Explicit_Test-Refinements	17-36	\n
+a	Achim_D._Brucker	Burkhart_Wolff	\n
+p	Advances_in_Property-Based_Testing_for_\alpha_Prolog	37-56	\n
+a	James_Cheney	Alberto_Momigliano	Matteo_Pessina	\n
+p	Tests_and_Proofs_for_Enumerative_Combinatorics	57-75	\n
+a	Catherine_Dubois	Alain_Giorgetti	Richard_Genestier	\n
+p	Classifying_Test_Suite_Effectiveness_via_Model_Inference_and_ROBBDs	76-93	\n
+a	Hermann_Felbinger	Ingo_Pill	Franz_Wotawa	\n
+p	Your_Proof_Fails?_Testing_Helps_to_Find_the_Reason	130-150	\n
+a	Guillaume_Petiot	Nikolai_Kosmatov	Bernard_Botella	Alain_Giorgetti	Jacques_Julliand	\n
+p	Classifying_Bugs_with_Interpolants._151-168	\n
+a	Andreas_Podelski	Martin_Schaf	Thomas_Wies	\n

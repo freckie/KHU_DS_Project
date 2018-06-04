@@ -104,6 +104,15 @@ namespace kmh
 		bool add(_Ty&& item);
 
 		/**
+		*	@brief	새로운 데이터를 리스트에 추가한다.
+		*	@pre	없음.
+		*	@post	새로운 데이터를 리스트에 추가한다.
+		*	@param	item	새로운 데이터.
+		*	@return 잘 작동했다면 1, 아니라면 0.
+		*/
+		NodeType<_Ty>* add_and_get(_Ty& item);
+
+		/**
 		*	@brief	데이터를 찾아 리스트에서 삭제한다.
 		*	@pre	없음.
 		*	@post	데이터를 리스트에서 삭제한다.
@@ -324,6 +333,62 @@ namespace kmh
 			m_Last = target;
 			m_Length++;
 			return true;
+		}
+	}
+
+	template<typename _Ty>
+	NodeType<_Ty>* LinkedList<_Ty>::add_and_get(_Ty & item)
+	{
+		NodeType<_Ty>* target = new NodeType<_Ty>(item);
+		NodeType<_Ty>* cur;
+
+		// 리스트가 비어있다면 처음 삽입.
+		if (is_empty())
+		{
+			m_First = target;
+			m_Last = target;
+			m_Length = 1;
+			return target;
+		}
+		else
+		{
+			cur = m_First;
+			while (cur != nullptr)
+			{
+				// 새로 넣을 데이터가 더 작은 순간
+				if (item < cur->data)
+				{
+					// 넣을 곳이 맨 앞이라면
+					if (cur == m_First)
+					{
+						target->next = cur;
+						cur->prev = target;
+						m_First = target;
+					}
+					else
+					{
+						target->prev = cur->prev;
+						target->next = cur;
+						(cur->prev)->next = target;
+						cur->prev = target;
+					}
+
+					m_Length++;
+					return target;
+				}
+				// 만약 같은 데이터가 있다면
+				else if (item == cur->data)
+					return nullptr;
+				// 조건이 만족하지 않는다면
+				else
+					cur = cur->next;
+			}
+			// 이제는 넣을 곳이 맨 뒤이다.
+			m_Last->next = target;
+			target->prev = m_Last;
+			m_Last = target;
+			m_Length++;
+			return target;
 		}
 	}
 

@@ -801,8 +801,150 @@ void Application::user_author_ranking()
 
 void Application::load_file()
 {
+	system("cls");
+	cout << endl << endl;
+	cout << ColorType::LPurple << "\t< 메인 메뉴 :: 불러오기 >" << ColorType::Default << endl << endl;
+
+	string file_name;
+	cout << "\t파일 이름 : ";
+	cin >> file_name;
+	cout << endl;
+
+	ifstream fin(file_name);
+	if (fin.fail())
+	{
+		cout << endl << ColorType::LRed << "\t파일 오픈에 실패하였습니다." << ColorType::Default << endl;
+		_getch();
+		return;
+	}
+
+	// 파일을 line 단위로 읽기
+	string line;
+	int idx = 0;
+	kmh::NodeType<ConferenceType>* temp_conf = nullptr;
+	kmh::BTreeNode<PaperType>* temp_paper = nullptr;
+	while (!fin.eof())
+	{
+		getline(fin, line);
+
+		// 주석 확인
+		if (line[0] == '#')
+		{
+			continue;
+		}
+		else if (line[0] == 'c')
+		{
+			cout << "[DEBUG] " << idx << "번째 줄은 conference임\n";
+			temp_conf = _add_conference(line);
+		}
+		else if (line[0] == 'p')
+		{
+			cout << "[DEBUG] " << idx << "번째 줄은 paper임\n";
+			temp_paper = _add_paper(temp_conf, line);
+		}
+		else if (line[0] == 'a')
+		{
+			cout << "[DEBUG] " << idx << "번째 줄은 author임\n";
+			_add_author(temp_paper, line);
+		}
+		else
+		{
+			cout << "[DEBUG] " << idx << "번째 줄은 비어있는 줄\n";
+			continue;
+		}
+
+		idx++;
+	}
+
+	cout << "멈춤.";
+	_getch();
 }
 
 void Application::save_file()
 {
+}
+
+kmh::NodeType<ConferenceType>* Application::_add_conference(string line)
+{
+	string title;
+	string date;
+	string temp;
+
+	istringstream iss(line);
+	getline(iss, temp, '\t');	// 'c'
+	getline(iss, title, '\t');	// 제목
+	getline(iss, date, '\t');	// 날짜
+
+	ConferenceType conf;
+	conf.set_title(title);
+	conf.set_date(date);
+
+	return m_Conf.add_and_get(conf);
+}
+
+kmh::BTreeNode<PaperType>* Application::_add_paper(kmh::NodeType<ConferenceType>* conf, string line)
+{
+	string title;
+	string page;
+	string temp;
+
+	istringstream iss(line);
+	getline(iss, temp, '\t');	// 'p'
+	getline(iss, title, '\t');	// 제목
+	getline(iss, page, '\t');	// 날짜
+
+	PaperType paper;
+	paper.set_title(title);
+	paper.set_page(page);
+
+	kmh::BTreeNode<PaperType>* ptr = m_Paper.add_and_get(paper);
+	conf->data.add_paper(ptr);
+	return ptr;
+}
+
+void Application::_add_author(kmh::BTreeNode<PaperType>* paper, string line)
+{
+	kmh::LinkedList<string> authors;
+	string token;
+
+	istringstream iss(line);
+	while (getline(iss, token, '\t'))
+	{
+		if (token == "a")
+			continue;
+		else if (token == "\\n")
+			break;
+		else
+			authors.add(token);
+	}
+
+	// Paper에 등록
+	AuthorType* temp_ptr = paper->data.get_author()->data();
+	paper->data.get_author()->realloc(authors.length());
+	int idx = 0;
+	for (auto iter = authors.begin(); iter != authors.end(); ++iter)
+	{
+		temp_ptr[idx].set_name(*iter);
+		idx++;
+	}
+
+	// Paper List에 등록
+	kmh::ArrayList<AuthorType>* temp_author = paper->data.get_author();
+	for (auto iter = temp_author->begin(); iter != temp_author->end(); ++iter)
+	{
+		// 만약 저자 리스트가 비어있다면
+		if (m_Author.is_empty())
+		{
+			m_Author.emplace(*iter, 1);
+		}
+		else
+		{
+			// 만약 추가되지 않은 저자라면, 추가.
+			if (m_Author.find(*iter).is_null())
+				m_Author.emplace(*iter, 1);
+			// 추가되어있는 저자라면, 값++
+			else
+				(*(m_Author.find(*iter))).val++;
+		}
+	}
 }

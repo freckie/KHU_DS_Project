@@ -3,9 +3,10 @@
 #ifndef _APPLICATION_H
 #define _APPLICATION_H
 
-#include<algorithm>
 #include<Windows.h>
 #include<iostream>
+#include<fstream>
+#include<sstream>
 #include<conio.h>
 #include<string>
 
@@ -187,6 +188,11 @@ public:
 	void save_file();
 
 private:
+
+	kmh::NodeType<ConferenceType>* _add_conference(string line);
+	kmh::BTreeNode<PaperType>* _add_paper(kmh::NodeType<ConferenceType>* conf, string line);
+	void _add_author(kmh::BTreeNode<PaperType>* paper, string line);
+
 	int m_Command;
 	MenuLevel m_Menu;
 	kmh::ListMap<AuthorType, int> m_Author;
